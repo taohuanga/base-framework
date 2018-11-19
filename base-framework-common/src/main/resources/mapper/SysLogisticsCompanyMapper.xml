@@ -63,19 +63,20 @@
 	  	select count(1) as s from sys_logistics_company a where 1=1
 	  	<include refid="condition" />
 	</select>
-	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="com.towcent.base.common.page.SimplePage" >
 	  	select 
 	  	<include refid="Base_Column_List" />
-	  	from sys_logistics_company a
-	  	where 1=1
+	  	from sys_logistics_company a 
+	  	<where>
 	  	<include refid="condition" />
+	  	</where>
 	  	<if test="orderByField != null and ''!=orderByField" >
 	    	order by ${orderByField} 
 	    	<if test="orderByField" >
 	      	${orderBy}
 	    	</if>
 	  	</if>
-	  	limit #{page.startRowNum} ,#{page.pageSize}
+	  	limit #{startRowNum} ,#{pageSize}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
 	  	delete from sys_logistics_company

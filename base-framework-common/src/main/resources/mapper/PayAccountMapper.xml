@@ -1,328 +1,338 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.towcent.base.dal.db.PayAccountMapper" >
-  <resultMap id="BaseResultMap" type="com.towcent.base.pay.entity.PayAccount" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="pay_id" property="payId" jdbcType="INTEGER" />
-    <result column="partner" property="partner" jdbcType="VARCHAR" />
-    <result column="appid" property="appid" jdbcType="VARCHAR" />
-    <result column="public_key" property="publicKey" jdbcType="VARCHAR" />
-    <result column="private_key" property="privateKey" jdbcType="VARCHAR" />
-    <result column="notify_url" property="notifyUrl" jdbcType="VARCHAR" />
-    <result column="return_url" property="returnUrl" jdbcType="VARCHAR" />
-    <result column="seller" property="seller" jdbcType="VARCHAR" />
-    <result column="sign_type" property="signType" jdbcType="VARCHAR" />
-    <result column="input_charset" property="inputCharset" jdbcType="VARCHAR" />
-    <result column="pay_type" property="payType" jdbcType="CHAR" />
-    <result column="msg_type" property="msgType" jdbcType="CHAR" />
-    <result column="is_test" property="isTest" jdbcType="BIT" />
-    <result column="create_by" property="createBy" jdbcType="CHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />		
-    <result column="wx_remark" property="wxRemark" jdbcType="VARCHAR" />	
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, pay_id, partner, appid, public_key, private_key, notify_url, return_url, seller, 
-    sign_type, input_charset, pay_type, msg_type, is_test, create_by, create_time, merchant_id,
-    wx_remark
-  </sql>
-  <sql id="condition" >
-    <if test="null!=params" >
-      <if test="params.id != null" >
-        and id = #{params.id,jdbcType=INTEGER}
-      </if>
-      <if test="params.payId != null" >
-        and pay_id = #{params.payId,jdbcType=INTEGER}
-      </if>
-      <if test="params.partner != null and '' != params.partner" >
-        and partner = #{params.partner,jdbcType=VARCHAR}
-      </if>
-      <if test="params.appid != null and '' != params.appid" >
-        and appid = #{params.appid,jdbcType=VARCHAR}
-      </if>
-      <if test="params.publicKey != null and '' != params.publicKey" >
-        and public_key = #{params.publicKey,jdbcType=VARCHAR}
-      </if>
-      <if test="params.privateKey != null and '' != params.privateKey" >
-        and private_key = #{params.privateKey,jdbcType=VARCHAR}
-      </if>
-      <if test="params.notifyUrl != null and '' != params.notifyUrl" >
-        and notify_url = #{params.notifyUrl,jdbcType=VARCHAR}
-      </if>
-      <if test="params.returnUrl != null and '' != params.returnUrl" >
-        and return_url = #{params.returnUrl,jdbcType=VARCHAR}
-      </if>
-      <if test="params.seller != null and '' != params.seller" >
-        and seller = #{params.seller,jdbcType=VARCHAR}
-      </if>
-      <if test="params.signType != null and '' != params.signType" >
-        and sign_type = #{params.signType,jdbcType=VARCHAR}
-      </if>
-      <if test="params.inputCharset != null and '' != params.inputCharset" >
-        and input_charset = #{params.inputCharset,jdbcType=VARCHAR}
-      </if>
-      <if test="params.payType != null and '' != params.payType" >
-        and pay_type = #{params.payType,jdbcType=CHAR}
-      </if>
-      <if test="params.msgType != null and '' != params.msgType" >
-        and msg_type = #{params.msgType,jdbcType=CHAR}
-      </if>
-      <if test="params.isTest != null" >
-        and is_test = #{params.isTest,jdbcType=BIT}
-      </if>
-      <if test="params.createBy != null and '' != params.createBy" >
-        and create_by = #{params.createBy,jdbcType=CHAR}
-      </if>
-      <if test="params.createTime != null" >
-        and create_time = #{params.createTime,jdbcType=TIMESTAMP}
-      </if>
-      <if test="params.merchantId != null" >
-       	and merchant_id = #{params.merchantId,jdbcType=INTEGER}
-      </if>
-    </if>
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from pay_account
-    where pay_id = #{payId,jdbcType=INTEGER} 
-    and merchant_id = #{merchantId,jdbcType=INTEGER}
-  </select>
-  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
-    select 
-    <include refid="Base_Column_List" />
-    from pay_account
-    where 1=1 
-    <include refid="condition" />
-  </select>
-  <select id="selectCount" resultType="java.lang.Integer" >
-    select count(1) as s from pay_account where 1=1 
-    <include refid="condition" />
-  </select>
-  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
-    select 
-    <include refid="Base_Column_List" />
-    from pay_account
-    where 1=1 
-    <include refid="condition" />
-    <if test="orderByField != null and ''!=orderByField" >
-      order by ${orderByField} 
-      <if test="orderByField" >
-        ${orderBy}
-      </if>
-    </if>
-    limit #{page.startRowNum} ,#{page.pageSize}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from pay_account
-    where id = #{id,jdbcType=INTEGER} 
-  </delete>
-  <delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.base.pay.entity.PayAccount" >
-    delete from pay_account
-    where pay_id = #{payId,jdbcType=INTEGER} 
-    and merchant_id = #{merchantId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.towcent.base.pay.entity.PayAccount" >
-    insert into pay_account (id, pay_id, partner, appid, 
-      public_key, private_key, notify_url, 
-      return_url, seller, sign_type, 
-      input_charset, pay_type, msg_type, 
-      is_test, create_by, create_time,
-	  merchant_id, wx_remark
-      )
-    values (#{id,jdbcType=INTEGER}, #{payId,jdbcType=INTEGER}, #{partner,jdbcType=VARCHAR}, #{appid,jdbcType=VARCHAR}, 
-      #{publicKey,jdbcType=VARCHAR}, #{privateKey,jdbcType=VARCHAR}, #{notifyUrl,jdbcType=VARCHAR}, 
-      #{returnUrl,jdbcType=VARCHAR}, #{seller,jdbcType=VARCHAR}, #{signType,jdbcType=VARCHAR}, 
-      #{inputCharset,jdbcType=VARCHAR}, #{payType,jdbcType=CHAR}, #{msgType,jdbcType=CHAR}, 
-      #{isTest,jdbcType=BIT}, #{createBy,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP},
-      #{merchantId,jdbcType=INTEGER}, #{wxRemark,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.towcent.base.pay.entity.PayAccount" >
-    insert into pay_account
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="payId != null" >
-        pay_id,
-      </if>
-      <if test="partner != null" >
-        partner,
-      </if>
-      <if test="appid != null" >
-        appid,
-      </if>
-      <if test="publicKey != null" >
-        public_key,
-      </if>
-      <if test="privateKey != null" >
-        private_key,
-      </if>
-      <if test="notifyUrl != null" >
-        notify_url,
-      </if>
-      <if test="returnUrl != null" >
-        return_url,
-      </if>
-      <if test="seller != null" >
-        seller,
-      </if>
-      <if test="signType != null" >
-        sign_type,
-      </if>
-      <if test="inputCharset != null" >
-        input_charset,
-      </if>
-      <if test="payType != null" >
-        pay_type,
-      </if>
-      <if test="msgType != null" >
-        msg_type,
-      </if>
-      <if test="isTest != null" >
-        is_test,
-      </if>
-      <if test="createBy != null" >
-        create_by,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="merchantId != null" >
-      	merchant_id,
-      </if>
-      <if test="wxRemark != null" >
-      	wx_remark,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="payId != null" >
-        #{payId,jdbcType=INTEGER},
-      </if>
-      <if test="partner != null" >
-        #{partner,jdbcType=VARCHAR},
-      </if>
-      <if test="appid != null" >
-        #{appid,jdbcType=VARCHAR},
-      </if>
-      <if test="publicKey != null" >
-        #{publicKey,jdbcType=VARCHAR},
-      </if>
-      <if test="privateKey != null" >
-        #{privateKey,jdbcType=VARCHAR},
-      </if>
-      <if test="notifyUrl != null" >
-        #{notifyUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="returnUrl != null" >
-        #{returnUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="seller != null" >
-        #{seller,jdbcType=VARCHAR},
-      </if>
-      <if test="signType != null" >
-        #{signType,jdbcType=VARCHAR},
-      </if>
-      <if test="inputCharset != null" >
-        #{inputCharset,jdbcType=VARCHAR},
-      </if>
-      <if test="payType != null" >
-        #{payType,jdbcType=CHAR},
-      </if>
-      <if test="msgType != null" >
-        #{msgType,jdbcType=CHAR},
-      </if>
-      <if test="isTest != null" >
-        #{isTest,jdbcType=BIT},
-      </if>
-      <if test="createBy != null" >
-        #{createBy,jdbcType=CHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="merchantId != null" >
-      	#{merchantId,jdbcType=INTEGER},
-      </if>
-      <if test="wxRemark != null" >
-      	#{wxRemark,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.pay.entity.PayAccount" >
-    update pay_account
-    <set >
-      <if test="partner != null" >
-        partner = #{partner,jdbcType=VARCHAR},
-      </if>
-      <if test="appid != null" >
-        appid = #{appid,jdbcType=VARCHAR},
-      </if>
-      <if test="publicKey != null" >
-        public_key = #{publicKey,jdbcType=VARCHAR},
-      </if>
-      <if test="privateKey != null" >
-        private_key = #{privateKey,jdbcType=VARCHAR},
-      </if>
-      <if test="notifyUrl != null" >
-        notify_url = #{notifyUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="returnUrl != null" >
-        return_url = #{returnUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="seller != null" >
-        seller = #{seller,jdbcType=VARCHAR},
-      </if>
-      <if test="signType != null" >
-        sign_type = #{signType,jdbcType=VARCHAR},
-      </if>
-      <if test="inputCharset != null" >
-        input_charset = #{inputCharset,jdbcType=VARCHAR},
-      </if>
-      <if test="payType != null" >
-        pay_type = #{payType,jdbcType=CHAR},
-      </if>
-      <if test="msgType != null" >
-        msg_type = #{msgType,jdbcType=CHAR},
-      </if>
-      <if test="isTest != null" >
-        is_test = #{isTest,jdbcType=BIT},
-      </if>
-      <if test="createBy != null" >
-        create_by = #{createBy,jdbcType=CHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="wxRemark != null" >
-      	wx_remark = #{wxRemark,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where pay_id = #{payId,jdbcType=INTEGER} 
-    AND merchant_id = #{merchantId,jdbcType=INTEGER} 
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.towcent.base.pay.entity.PayAccount" >
-    update pay_account
-    set partner = #{partner,jdbcType=VARCHAR},
-      appid = #{appid,jdbcType=VARCHAR},
-      public_key = #{publicKey,jdbcType=VARCHAR},
-      private_key = #{privateKey,jdbcType=VARCHAR},
-      notify_url = #{notifyUrl,jdbcType=VARCHAR},
-      return_url = #{returnUrl,jdbcType=VARCHAR},
-      seller = #{seller,jdbcType=VARCHAR},
-      sign_type = #{signType,jdbcType=VARCHAR},
-      input_charset = #{inputCharset,jdbcType=VARCHAR},
-      pay_type = #{payType,jdbcType=CHAR},
-      msg_type = #{msgType,jdbcType=CHAR},
-      is_test = #{isTest,jdbcType=BIT},
-      create_by = #{createBy,jdbcType=CHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      wx_remark = #{wxRemark,jdbcType=VARCHAR}
-    where pay_id = #{payId,jdbcType=INTEGER} 
-    AND merchant_id = #{merchantId,jdbcType=INTEGER} 
-  </update>
+<mapper namespace="com.towcent.base.dal.db.PayAccountMapper">
+	<resultMap id="BaseResultMap" type="com.towcent.base.pay.entity.PayAccount">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="pay_id" property="payId" jdbcType="INTEGER" />
+		<result column="partner" property="partner" jdbcType="VARCHAR" />
+		<result column="appid" property="appid" jdbcType="VARCHAR" />
+		<result column="public_key" property="publicKey" jdbcType="VARCHAR" />
+		<result column="private_key" property="privateKey" jdbcType="VARCHAR" />
+		<result column="notify_url" property="notifyUrl" jdbcType="VARCHAR" />
+		<result column="return_url" property="returnUrl" jdbcType="VARCHAR" />
+		<result column="seller" property="seller" jdbcType="VARCHAR" />
+		<result column="sign_type" property="signType" jdbcType="VARCHAR" />
+		<result column="input_charset" property="inputCharset"
+			jdbcType="VARCHAR" />
+		<result column="pay_type" property="payType" jdbcType="CHAR" />
+		<result column="msg_type" property="msgType" jdbcType="CHAR" />
+		<result column="is_test" property="isTest" jdbcType="BIT" />
+		<result column="create_by" property="createBy" jdbcType="CHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+		<result column="wx_remark" property="wxRemark" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, pay_id, partner, appid, public_key, private_key, notify_url,
+		return_url, seller,
+		sign_type, input_charset, pay_type, msg_type, is_test, create_by, create_time,
+		merchant_id,
+		wx_remark
+	</sql>
+	<sql id="condition">
+		<if test="null!=params">
+			<if test="params.id != null">
+				and id = #{params.id,jdbcType=INTEGER}
+			</if>
+			<if test="params.payId != null">
+				and pay_id = #{params.payId,jdbcType=INTEGER}
+			</if>
+			<if test="params.partner != null and '' != params.partner">
+				and partner = #{params.partner,jdbcType=VARCHAR}
+			</if>
+			<if test="params.appid != null and '' != params.appid">
+				and appid = #{params.appid,jdbcType=VARCHAR}
+			</if>
+			<if test="params.publicKey != null and '' != params.publicKey">
+				and public_key = #{params.publicKey,jdbcType=VARCHAR}
+			</if>
+			<if test="params.privateKey != null and '' != params.privateKey">
+				and private_key = #{params.privateKey,jdbcType=VARCHAR}
+			</if>
+			<if test="params.notifyUrl != null and '' != params.notifyUrl">
+				and notify_url = #{params.notifyUrl,jdbcType=VARCHAR}
+			</if>
+			<if test="params.returnUrl != null and '' != params.returnUrl">
+				and return_url = #{params.returnUrl,jdbcType=VARCHAR}
+			</if>
+			<if test="params.seller != null and '' != params.seller">
+				and seller = #{params.seller,jdbcType=VARCHAR}
+			</if>
+			<if test="params.signType != null and '' != params.signType">
+				and sign_type = #{params.signType,jdbcType=VARCHAR}
+			</if>
+			<if test="params.inputCharset != null and '' != params.inputCharset">
+				and input_charset = #{params.inputCharset,jdbcType=VARCHAR}
+			</if>
+			<if test="params.payType != null and '' != params.payType">
+				and pay_type = #{params.payType,jdbcType=CHAR}
+			</if>
+			<if test="params.msgType != null and '' != params.msgType">
+				and msg_type = #{params.msgType,jdbcType=CHAR}
+			</if>
+			<if test="params.isTest != null">
+				and is_test = #{params.isTest,jdbcType=BIT}
+			</if>
+			<if test="params.createBy != null and '' != params.createBy">
+				and create_by = #{params.createBy,jdbcType=CHAR}
+			</if>
+			<if test="params.createTime != null">
+				and create_time = #{params.createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="params.merchantId != null">
+				and merchant_id = #{params.merchantId,jdbcType=INTEGER}
+			</if>
+		</if>
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from pay_account
+		where pay_id = #{payId,jdbcType=INTEGER}
+		and merchant_id = #{merchantId,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from pay_account
+		where 1=1
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer">
+		select count(1) as s from pay_account where 1=1
+		<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap"
+		parameterType="com.towcent.base.common.page.SimplePage">
+		select
+		<include refid="Base_Column_List" />
+		from pay_account a
+		<where>
+			<include refid="condition" />
+		</where>
+		<if test="orderByField != null and ''!=orderByField">
+			order by ${orderByField}
+			<if test="orderByField">
+				${orderBy}
+			</if>
+		</if>
+		limit #{startRowNum} ,#{pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from pay_account
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.base.pay.entity.PayAccount">
+		delete from pay_account
+		where pay_id = #{payId,jdbcType=INTEGER}
+		and merchant_id = #{merchantId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.base.pay.entity.PayAccount">
+		insert into pay_account (id, pay_id, partner, appid,
+		public_key, private_key, notify_url,
+		return_url, seller, sign_type,
+		input_charset, pay_type, msg_type,
+		is_test, create_by, create_time,
+		merchant_id, wx_remark
+		)
+		values (#{id,jdbcType=INTEGER}, #{payId,jdbcType=INTEGER},
+		#{partner,jdbcType=VARCHAR}, #{appid,jdbcType=VARCHAR},
+		#{publicKey,jdbcType=VARCHAR}, #{privateKey,jdbcType=VARCHAR},
+		#{notifyUrl,jdbcType=VARCHAR},
+		#{returnUrl,jdbcType=VARCHAR}, #{seller,jdbcType=VARCHAR}, #{signType,jdbcType=VARCHAR},
+		#{inputCharset,jdbcType=VARCHAR}, #{payType,jdbcType=CHAR},
+		#{msgType,jdbcType=CHAR},
+		#{isTest,jdbcType=BIT}, #{createBy,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP},
+		#{merchantId,jdbcType=INTEGER}, #{wxRemark,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.base.pay.entity.PayAccount">
+		insert into pay_account
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="payId != null">
+				pay_id,
+			</if>
+			<if test="partner != null">
+				partner,
+			</if>
+			<if test="appid != null">
+				appid,
+			</if>
+			<if test="publicKey != null">
+				public_key,
+			</if>
+			<if test="privateKey != null">
+				private_key,
+			</if>
+			<if test="notifyUrl != null">
+				notify_url,
+			</if>
+			<if test="returnUrl != null">
+				return_url,
+			</if>
+			<if test="seller != null">
+				seller,
+			</if>
+			<if test="signType != null">
+				sign_type,
+			</if>
+			<if test="inputCharset != null">
+				input_charset,
+			</if>
+			<if test="payType != null">
+				pay_type,
+			</if>
+			<if test="msgType != null">
+				msg_type,
+			</if>
+			<if test="isTest != null">
+				is_test,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="merchantId != null">
+				merchant_id,
+			</if>
+			<if test="wxRemark != null">
+				wx_remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="payId != null">
+				#{payId,jdbcType=INTEGER},
+			</if>
+			<if test="partner != null">
+				#{partner,jdbcType=VARCHAR},
+			</if>
+			<if test="appid != null">
+				#{appid,jdbcType=VARCHAR},
+			</if>
+			<if test="publicKey != null">
+				#{publicKey,jdbcType=VARCHAR},
+			</if>
+			<if test="privateKey != null">
+				#{privateKey,jdbcType=VARCHAR},
+			</if>
+			<if test="notifyUrl != null">
+				#{notifyUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="returnUrl != null">
+				#{returnUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="seller != null">
+				#{seller,jdbcType=VARCHAR},
+			</if>
+			<if test="signType != null">
+				#{signType,jdbcType=VARCHAR},
+			</if>
+			<if test="inputCharset != null">
+				#{inputCharset,jdbcType=VARCHAR},
+			</if>
+			<if test="payType != null">
+				#{payType,jdbcType=CHAR},
+			</if>
+			<if test="msgType != null">
+				#{msgType,jdbcType=CHAR},
+			</if>
+			<if test="isTest != null">
+				#{isTest,jdbcType=BIT},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId,jdbcType=INTEGER},
+			</if>
+			<if test="wxRemark != null">
+				#{wxRemark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.pay.entity.PayAccount">
+		update pay_account
+		<set>
+			<if test="partner != null">
+				partner = #{partner,jdbcType=VARCHAR},
+			</if>
+			<if test="appid != null">
+				appid = #{appid,jdbcType=VARCHAR},
+			</if>
+			<if test="publicKey != null">
+				public_key = #{publicKey,jdbcType=VARCHAR},
+			</if>
+			<if test="privateKey != null">
+				private_key = #{privateKey,jdbcType=VARCHAR},
+			</if>
+			<if test="notifyUrl != null">
+				notify_url = #{notifyUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="returnUrl != null">
+				return_url = #{returnUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="seller != null">
+				seller = #{seller,jdbcType=VARCHAR},
+			</if>
+			<if test="signType != null">
+				sign_type = #{signType,jdbcType=VARCHAR},
+			</if>
+			<if test="inputCharset != null">
+				input_charset = #{inputCharset,jdbcType=VARCHAR},
+			</if>
+			<if test="payType != null">
+				pay_type = #{payType,jdbcType=CHAR},
+			</if>
+			<if test="msgType != null">
+				msg_type = #{msgType,jdbcType=CHAR},
+			</if>
+			<if test="isTest != null">
+				is_test = #{isTest,jdbcType=BIT},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="wxRemark != null">
+				wx_remark = #{wxRemark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where pay_id = #{payId,jdbcType=INTEGER}
+		AND merchant_id = #{merchantId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.towcent.base.pay.entity.PayAccount">
+		update pay_account
+		set partner = #{partner,jdbcType=VARCHAR},
+		appid = #{appid,jdbcType=VARCHAR},
+		public_key = #{publicKey,jdbcType=VARCHAR},
+		private_key = #{privateKey,jdbcType=VARCHAR},
+		notify_url = #{notifyUrl,jdbcType=VARCHAR},
+		return_url = #{returnUrl,jdbcType=VARCHAR},
+		seller = #{seller,jdbcType=VARCHAR},
+		sign_type = #{signType,jdbcType=VARCHAR},
+		input_charset = #{inputCharset,jdbcType=VARCHAR},
+		pay_type = #{payType,jdbcType=CHAR},
+		msg_type = #{msgType,jdbcType=CHAR},
+		is_test = #{isTest,jdbcType=BIT},
+		create_by = #{createBy,jdbcType=CHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		wx_remark = #{wxRemark,jdbcType=VARCHAR}
+		where pay_id = #{payId,jdbcType=INTEGER}
+		AND merchant_id = #{merchantId,jdbcType=INTEGER}
+	</update>
 </mapper>

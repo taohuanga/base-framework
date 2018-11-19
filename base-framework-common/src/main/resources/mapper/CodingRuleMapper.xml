@@ -1,245 +1,256 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.towcent.base.dal.db.CodingRuleMapper" >
-  <resultMap id="BaseResultMap" type="com.towcent.base.common.model.CodingRule" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="request_id" property="requestId" jdbcType="VARCHAR" />
-    <result column="request_name" property="requestName" jdbcType="VARCHAR" />
-    <result column="prefix" property="prefix" jdbcType="VARCHAR" />
-    <result column="current_serial_no" property="currentSerialNo" jdbcType="INTEGER" />
-    <result column="serial_no_length" property="serialNoLength" jdbcType="INTEGER" />
-    <result column="reset_mode" property="resetMode" jdbcType="INTEGER" />
-    <result column="reset_time" property="resetTime" jdbcType="TIMESTAMP" />
-    <result column="db_time" property="dbTime" jdbcType="TIMESTAMP" />
-    <result column="allow_break_no" property="allowBreakNo" jdbcType="TINYINT" />
-    <result column="is_abstract" property="isAbstract" jdbcType="TINYINT" />
-    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
-    <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, request_id, request_name, prefix, current_serial_no, serial_no_length, reset_mode, 
-    reset_time, allow_break_no, is_abstract, remarks, merchant_id, 
-    <if test="dbName == 'oracle'">
-    	sysdate as db_time
-    </if>
-    <if test="dbName == 'mysql'">
-    	now() as db_time
-    </if>
-  </sql>
-  <sql id="condition" >
-    <if test="null!=params" >
-      <if test="null!=params.queryCondition and ''!=params.queryCondition" >
-        ${params.queryCondition}
-      </if>
-    </if>
-  </sql>
-  <select id="selectByRequestId" resultMap="BaseResultMap" >
-    SELECT 
-    <include refid="Base_Column_List" />
-    FROM sys_code_rule
-    WHERE  
-    merchant_id = #{merchantId}  
-    AND request_id = #{requestId,jdbcType=VARCHAR} FOR UPDATE 
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" >
-    SELECT 
-    <include refid="Base_Column_List" />
-    FROM sys_code_rule
-    WHERE id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectCount" resultType="java.lang.Integer" >
-    SELECT COUNT(1) as s FROM sys_code_rule 
-    WHERE 1=1 
-    <include refid="condition" />
-  </select>
-  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
-    SELECT 
-    <include refid="Base_Column_List" />
-     FROM sys_code_rule WHERE 1=1  
-    <include refid="condition" />
-    <if test="orderByField != null and ''!=orderByField" >
-      ORDER BY ${orderByField}
-      <if test="orderByField" >
-        ${orderBy}
-      </if>
-    </if>
-     LIMIT #{page.startRowNum} ,#{page.pageSize} 
-  </select>
-  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
-    SELECT 
-    <include refid="Base_Column_List" />
-     FROM sys_code_rule WHERE 1=1  
-    <include refid="condition" />
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    DELETE FROM sys_code_rule
-    WHERE id = #{id,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.base.common.model.CodingRule" >
-    DELETE FROM sys_code_rule
-    WHERE id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.towcent.base.common.model.CodingRule" >
-    INSERT INTO sys_code_rule (id, request_id, request_name, 
-      prefix, current_serial_no, serial_no_length, 
-      reset_mode, reset_time, allow_break_no, is_abstract,
-      remarks, merchant_id)
-    VALUES (#{id,jdbcType=INTEGER}, #{requestId,jdbcType=VARCHAR}, #{requestName,jdbcType=VARCHAR}, 
-      #{prefix,jdbcType=VARCHAR}, #{currentSerialNo,jdbcType=INTEGER}, #{serialNoLength,jdbcType=INTEGER}, 
-      #{resetMode,jdbcType=INTEGER}, #{resetTime,jdbcType=TIMESTAMP}, #{allowBreakNo,jdbcType=TINYINT}, #{isAbstract,jdbcType=TINYINT},
-      #{remarks,jdbcType=VARCHAR}, #{merchantId,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="com.towcent.base.common.model.CodingRule" >
-    INSERT INTO sys_code_rule
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="requestId != null" >
-        request_id,
-      </if>
-      <if test="requestName != null" >
-        request_name,
-      </if>
-      <if test="prefix != null" >
-        prefix,
-      </if>
-      <if test="currentSerialNo != null" >
-        current_serial_no,
-      </if>
-      <if test="serialNoLength != null" >
-        serial_no_length,
-      </if>
-      <if test="resetMode != null" >
-        reset_mode,
-      </if>
-      <if test="resetTime != null" >
-        reset_time,
-      </if>
-      <if test="allowBreakNo != null" >
-        allow_break_no,
-      </if>
-      <if test="isAbstract != null" >
-        is_abstract,
-      </if>
-      <if test="remarks != null" >
-        remarks,
-      </if>
-      <if test="merchantId != null" >
-        merchant_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="requestId != null" >
-        #{requestId,jdbcType=VARCHAR},
-      </if>
-      <if test="requestName != null" >
-        #{requestName,jdbcType=VARCHAR},
-      </if>
-      <if test="prefix != null" >
-        #{prefix,jdbcType=VARCHAR},
-      </if>
-      <if test="currentSerialNo != null" >
-        #{currentSerialNo,jdbcType=INTEGER},
-      </if>
-      <if test="serialNoLength != null" >
-        #{serialNoLength,jdbcType=INTEGER},
-      </if>
-      <if test="resetMode != null" >
-        #{resetMode,jdbcType=INTEGER},
-      </if>
-      <if test="resetTime != null" >
-        #{resetTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="allowBreakNo != null" >
-        #{allowBreakNo,jdbcType=TINYINT},
-      </if>
-      <if test="isAbstract != null" >
-        #{isAbstract,jdbcType=TINYINT},
-      </if>
-      <if test="remarks != null" >
-        #{remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="merchantId != null" >
-        #{merchantId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.common.model.CodingRule" >
-    UPDATE sys_code_rule
-    <set >
-      <if test="requestId != null" >
-        request_id = #{requestId,jdbcType=VARCHAR},
-      </if>
-      <if test="requestName != null" >
-        request_name = #{requestName,jdbcType=VARCHAR},
-      </if>
-      <if test="prefix != null" >
-        prefix = #{prefix,jdbcType=VARCHAR},
-      </if>
-      <if test="currentSerialNo != null" >
-        current_serial_no = #{currentSerialNo,jdbcType=INTEGER},
-      </if>
-      <if test="serialNoLength != null" >
-        serial_no_length = #{serialNoLength,jdbcType=INTEGER},
-      </if>
-      <if test="resetMode != null" >
-        reset_mode = #{resetMode,jdbcType=INTEGER},
-      </if>
-      <if test="resetTime != null" >
-        reset_time = #{resetTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="allowBreakNo != null" >
-        allow_break_no = #{allowBreakNo,jdbcType=TINYINT},
-      </if>
-      <if test="allowBreakNo != null" >
-        is_abstract = #{isAbstract,jdbcType=TINYINT},
-      </if>
-      <if test="remarks != null" >
-        remarks = #{remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="merchantId != null" >
-        merchant_id = #{merchantId,jdbcType=INTEGER},
-      </if>
-    </set>
-    WHERE id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.towcent.base.common.model.CodingRule" >
-    UPDATE sys_code_rule
-    SET request_id = #{requestId,jdbcType=VARCHAR},
-      request_name = #{requestName,jdbcType=VARCHAR},
-      prefix = #{prefix,jdbcType=VARCHAR},
-      current_serial_no = #{currentSerialNo,jdbcType=INTEGER},
-      serial_no_length = #{serialNoLength,jdbcType=INTEGER},
-      reset_mode = #{resetMode,jdbcType=INTEGER},
-      reset_time = #{resetTime,jdbcType=TIMESTAMP},
-      allow_break_no = #{allowBreakNo,jdbcType=TINYINT},
-      is_abstract = #{isAbstract,jdbcType=TINYINT},
-      remarks = #{remarks,jdbcType=VARCHAR},
-      merchant_id = #{merchantId,jdbcType=INTEGER}
-    WHERE id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="resetCurrentSerialNo" parameterType="map" >
-    UPDATE sys_code_rule
-    SET current_serial_no = 1 + #{step,jdbcType=INTEGER},reset_time = 
-    <if test="dbName == 'oracle'">
-    sysdate 
-    </if>
-    <if test="dbName == 'mysql'">
-    now() 
-    </if>
-    WHERE 1=1
-    AND merchant_id = #{merchantId}   
-    AND request_id = #{requestId,jdbcType=VARCHAR}
-  </update>
-  <update id="increaseSerialNo" parameterType="map" >
-    UPDATE sys_code_rule
-    SET current_serial_no = current_serial_no + #{step,jdbcType=INTEGER}
-    WHERE 1=1
-    AND merchant_id = #{merchantId}  
-    AND request_id = #{requestId,jdbcType=VARCHAR}
-  </update>
+<mapper namespace="com.towcent.base.dal.db.CodingRuleMapper">
+	<resultMap id="BaseResultMap" type="com.towcent.base.common.model.CodingRule">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="request_id" property="requestId" jdbcType="VARCHAR" />
+		<result column="request_name" property="requestName" jdbcType="VARCHAR" />
+		<result column="prefix" property="prefix" jdbcType="VARCHAR" />
+		<result column="current_serial_no" property="currentSerialNo"
+			jdbcType="INTEGER" />
+		<result column="serial_no_length" property="serialNoLength"
+			jdbcType="INTEGER" />
+		<result column="reset_mode" property="resetMode" jdbcType="INTEGER" />
+		<result column="reset_time" property="resetTime" jdbcType="TIMESTAMP" />
+		<result column="db_time" property="dbTime" jdbcType="TIMESTAMP" />
+		<result column="allow_break_no" property="allowBreakNo"
+			jdbcType="TINYINT" />
+		<result column="is_abstract" property="isAbstract" jdbcType="TINYINT" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, request_id, request_name, prefix, current_serial_no,
+		serial_no_length, reset_mode,
+		reset_time, allow_break_no, is_abstract, remarks, merchant_id,
+		<if test="dbName == 'oracle'">
+			sysdate as db_time
+		</if>
+		<if test="dbName == 'mysql'">
+			now() as db_time
+		</if>
+	</sql>
+	<sql id="condition">
+		<if test="null!=params">
+			<if test="null!=params.queryCondition and ''!=params.queryCondition">
+				${params.queryCondition}
+			</if>
+		</if>
+	</sql>
+	<select id="selectByRequestId" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM sys_code_rule
+		WHERE
+		merchant_id = #{merchantId}
+		AND request_id = #{requestId,jdbcType=VARCHAR} FOR UPDATE
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM sys_code_rule
+		WHERE id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer">
+		SELECT COUNT(1) as s FROM sys_code_rule
+		WHERE 1=1
+		<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap"
+		parameterType="com.towcent.base.common.page.SimplePage">
+		select
+		<include refid="Base_Column_List" />
+		from sys_code_rule a
+		<where>
+			<include refid="condition" />
+		</where>
+		<if test="orderByField != null and ''!=orderByField">
+			order by ${orderByField}
+			<if test="orderByField">
+				${orderBy}
+			</if>
+		</if>
+		limit #{startRowNum} ,#{pageSize}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap"
+		parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM sys_code_rule WHERE 1=1
+		<include refid="condition" />
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		DELETE FROM sys_code_rule
+		WHERE id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.base.common.model.CodingRule">
+		DELETE FROM sys_code_rule
+		WHERE id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.base.common.model.CodingRule">
+		INSERT INTO sys_code_rule (id, request_id, request_name,
+		prefix, current_serial_no, serial_no_length,
+		reset_mode, reset_time, allow_break_no, is_abstract,
+		remarks, merchant_id)
+		VALUES (#{id,jdbcType=INTEGER}, #{requestId,jdbcType=VARCHAR},
+		#{requestName,jdbcType=VARCHAR},
+		#{prefix,jdbcType=VARCHAR}, #{currentSerialNo,jdbcType=INTEGER},
+		#{serialNoLength,jdbcType=INTEGER},
+		#{resetMode,jdbcType=INTEGER}, #{resetTime,jdbcType=TIMESTAMP}, #{allowBreakNo,jdbcType=TINYINT},
+		#{isAbstract,jdbcType=TINYINT},
+		#{remarks,jdbcType=VARCHAR}, #{merchantId,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.base.common.model.CodingRule">
+		INSERT INTO sys_code_rule
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="requestId != null">
+				request_id,
+			</if>
+			<if test="requestName != null">
+				request_name,
+			</if>
+			<if test="prefix != null">
+				prefix,
+			</if>
+			<if test="currentSerialNo != null">
+				current_serial_no,
+			</if>
+			<if test="serialNoLength != null">
+				serial_no_length,
+			</if>
+			<if test="resetMode != null">
+				reset_mode,
+			</if>
+			<if test="resetTime != null">
+				reset_time,
+			</if>
+			<if test="allowBreakNo != null">
+				allow_break_no,
+			</if>
+			<if test="isAbstract != null">
+				is_abstract,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="merchantId != null">
+				merchant_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="requestId != null">
+				#{requestId,jdbcType=VARCHAR},
+			</if>
+			<if test="requestName != null">
+				#{requestName,jdbcType=VARCHAR},
+			</if>
+			<if test="prefix != null">
+				#{prefix,jdbcType=VARCHAR},
+			</if>
+			<if test="currentSerialNo != null">
+				#{currentSerialNo,jdbcType=INTEGER},
+			</if>
+			<if test="serialNoLength != null">
+				#{serialNoLength,jdbcType=INTEGER},
+			</if>
+			<if test="resetMode != null">
+				#{resetMode,jdbcType=INTEGER},
+			</if>
+			<if test="resetTime != null">
+				#{resetTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="allowBreakNo != null">
+				#{allowBreakNo,jdbcType=TINYINT},
+			</if>
+			<if test="isAbstract != null">
+				#{isAbstract,jdbcType=TINYINT},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.common.model.CodingRule">
+		UPDATE sys_code_rule
+		<set>
+			<if test="requestId != null">
+				request_id = #{requestId,jdbcType=VARCHAR},
+			</if>
+			<if test="requestName != null">
+				request_name = #{requestName,jdbcType=VARCHAR},
+			</if>
+			<if test="prefix != null">
+				prefix = #{prefix,jdbcType=VARCHAR},
+			</if>
+			<if test="currentSerialNo != null">
+				current_serial_no = #{currentSerialNo,jdbcType=INTEGER},
+			</if>
+			<if test="serialNoLength != null">
+				serial_no_length = #{serialNoLength,jdbcType=INTEGER},
+			</if>
+			<if test="resetMode != null">
+				reset_mode = #{resetMode,jdbcType=INTEGER},
+			</if>
+			<if test="resetTime != null">
+				reset_time = #{resetTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="allowBreakNo != null">
+				allow_break_no = #{allowBreakNo,jdbcType=TINYINT},
+			</if>
+			<if test="allowBreakNo != null">
+				is_abstract = #{isAbstract,jdbcType=TINYINT},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantId != null">
+				merchant_id = #{merchantId,jdbcType=INTEGER},
+			</if>
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.towcent.base.common.model.CodingRule">
+		UPDATE sys_code_rule
+		SET request_id = #{requestId,jdbcType=VARCHAR},
+		request_name = #{requestName,jdbcType=VARCHAR},
+		prefix = #{prefix,jdbcType=VARCHAR},
+		current_serial_no = #{currentSerialNo,jdbcType=INTEGER},
+		serial_no_length = #{serialNoLength,jdbcType=INTEGER},
+		reset_mode = #{resetMode,jdbcType=INTEGER},
+		reset_time = #{resetTime,jdbcType=TIMESTAMP},
+		allow_break_no = #{allowBreakNo,jdbcType=TINYINT},
+		is_abstract = #{isAbstract,jdbcType=TINYINT},
+		remarks = #{remarks,jdbcType=VARCHAR},
+		merchant_id = #{merchantId,jdbcType=INTEGER}
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="resetCurrentSerialNo" parameterType="map">
+		UPDATE sys_code_rule
+		SET current_serial_no = 1 + #{step,jdbcType=INTEGER},reset_time =
+		<if test="dbName == 'oracle'">
+			sysdate
+		</if>
+		<if test="dbName == 'mysql'">
+			now()
+		</if>
+		WHERE 1=1
+		AND merchant_id = #{merchantId}
+		AND request_id = #{requestId,jdbcType=VARCHAR}
+	</update>
+	<update id="increaseSerialNo" parameterType="map">
+		UPDATE sys_code_rule
+		SET current_serial_no = current_serial_no + #{step,jdbcType=INTEGER}
+		WHERE 1=1
+		AND merchant_id = #{merchantId}
+		AND request_id = #{requestId,jdbcType=VARCHAR}
+	</update>
 </mapper>

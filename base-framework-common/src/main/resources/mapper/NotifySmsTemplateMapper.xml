@@ -1,261 +1,272 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.towcent.base.dal.db.NotifySmsTemplateMapper" >
-  <resultMap id="BaseResultMap" type="com.towcent.base.common.model.NotifySmsTemplate" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="sms_type" property="smsType" jdbcType="TINYINT" />
-    <result column="content" property="content" jdbcType="VARCHAR" />
-    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
-    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
-    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
-    <result column="sms_template_id" property="smsTemplateId" jdbcType="VARCHAR" />
-    <result column="signature" property="signature" jdbcType="VARCHAR" />
-    <result column="param_str" property="paramStr" jdbcType="VARCHAR" />
-    <result column="is_security_code" property="isSecurityCode" jdbcType="CHAR" />
-    <result column="valid_time" property="validTime" jdbcType="INTEGER" />
-    <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />	
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, sms_type, content, create_date, create_by, update_date, update_by, sms_template_id, 
-    signature, param_str, is_security_code, valid_time, merchant_id
-  </sql>
-  <sql id="condition" >
-    <if test="null!=params" >
-      <if test="params.id != null" >
-        and id = #{params.id,jdbcType=INTEGER}
-      </if>
-      <if test="params.smsType != null" >
-        and sms_type = #{params.smsType,jdbcType=TINYINT}
-      </if>
-      <if test="params.content != null and '' != params.content" >
-        and content = #{params.content,jdbcType=VARCHAR}
-      </if>
-      <if test="params.createDate != null" >
-        and create_date = #{params.createDate,jdbcType=TIMESTAMP}
-      </if>
-      <if test="params.createBy != null" >
-        and create_by = #{params.createBy,jdbcType=VARCHAR}
-      </if>
-      <if test="params.updateDate != null" >
-        and update_date = #{params.updateDate,jdbcType=TIMESTAMP}
-      </if>
-      <if test="params.updateBy != null" >
-        and update_by = #{params.updateBy,jdbcType=VARCHAR}
-      </if>
-      <if test="params.smsTemplateId != null and '' != params.smsTemplateId" >
-        and sms_template_id = #{params.smsTemplateId,jdbcType=VARCHAR}
-      </if>
-      <if test="params.signature != null and '' != params.signature" >
-        and signature = #{params.signature,jdbcType=VARCHAR}
-      </if>
-      <if test="params.paramStr != null and '' != params.paramStr" >
-        and param_str = #{params.paramStr,jdbcType=VARCHAR}
-      </if>
-      <if test="params.isSecurityCode != null and '' != params.isSecurityCode" >
-        and is_security_code = #{params.isSecurityCode,jdbcType=CHAR}
-      </if>
-      <if test="params.validTime != null" >
-        and valid_time = #{params.validTime,jdbcType=INTEGER}
-      </if>
-      <if test="params.merchantId != null" >
-       	and merchant_id = #{params.merchantId,jdbcType=INTEGER}
-      </if>
-    </if>
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from notify_sms_template
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
-    select 
-    <include refid="Base_Column_List" />
-    from notify_sms_template
-    where 1=1 
-    <include refid="condition" />
-  </select>
-  <select id="selectCount" resultType="java.lang.Integer" >
-    select count(1) as s from notify_sms_template where 1=1 
-    <include refid="condition" />
-  </select>
-  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
-    select 
-    <include refid="Base_Column_List" />
-    from notify_sms_template
-    where 1=1
-    <include refid="condition" />
-    <if test="orderByField != null and ''!=orderByField" >
-      order by ${orderByField} 
-      <if test="orderByField" >
-        ${orderBy}
-      </if>
-    </if>
-    limit #{page.startRowNum} ,#{page.pageSize}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from notify_sms_template
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.base.common.model.NotifySmsTemplate" >
-    delete from notify_sms_template
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.towcent.base.common.model.NotifySmsTemplate" >
-    insert into notify_sms_template (id, sms_type, content, 
-      create_date, create_by, update_date, 
-      update_by, sms_template_id, signature, 
-      param_str, is_security_code, valid_time,
-			merchant_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{smsType,jdbcType=TINYINT}, #{content,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
-      #{updateBy,jdbcType=VARCHAR}, #{smsTemplateId,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR}, 
-      #{paramStr,jdbcType=VARCHAR}, #{isSecurityCode,jdbcType=CHAR}, #{validTime,jdbcType=INTEGER},#{merchantId,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.towcent.base.common.model.NotifySmsTemplate" >
-    insert into notify_sms_template
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="smsType != null" >
-        sms_type,
-      </if>
-      <if test="content != null" >
-        content,
-      </if>
-      <if test="createDate != null" >
-        create_date,
-      </if>
-      <if test="createBy != null" >
-        create_by,
-      </if>
-      <if test="updateDate != null" >
-        update_date,
-      </if>
-      <if test="updateBy != null" >
-        update_by,
-      </if>
-      <if test="smsTemplateId != null" >
-        sms_template_id,
-      </if>
-      <if test="signature != null" >
-        signature,
-      </if>
-      <if test="paramStr != null" >
-        param_str,
-      </if>
-      <if test="isSecurityCode != null" >
-        is_security_code,
-      </if>
-      <if test="validTime != null" >
-        valid_time,
-      </if>
-      <if test="merchantId != null" >
-      			merchant_id,
-      		</if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="smsType != null" >
-        #{smsType,jdbcType=TINYINT},
-      </if>
-      <if test="content != null" >
-        #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createBy != null" >
-        #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateDate != null" >
-        #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null" >
-        #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="smsTemplateId != null" >
-        #{smsTemplateId,jdbcType=VARCHAR},
-      </if>
-      <if test="signature != null" >
-        #{signature,jdbcType=VARCHAR},
-      </if>
-      <if test="paramStr != null" >
-        #{paramStr,jdbcType=VARCHAR},
-      </if>
-      <if test="isSecurityCode != null" >
-        #{isSecurityCode,jdbcType=CHAR},
-      </if>
-      <if test="validTime != null" >
-        #{validTime,jdbcType=INTEGER},
-      </if>
-      <if test="merchantId != null" >
-      			#{merchantId,jdbcType=INTEGER},
-      		</if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.common.model.NotifySmsTemplate" >
-    update notify_sms_template
-    <set >
-      <if test="smsType != null" >
-        sms_type = #{smsType,jdbcType=TINYINT},
-      </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createBy != null" >
-        create_by = #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateDate != null" >
-        update_date = #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null" >
-        update_by = #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="smsTemplateId != null" >
-        sms_template_id = #{smsTemplateId,jdbcType=VARCHAR},
-      </if>
-      <if test="signature != null" >
-        signature = #{signature,jdbcType=VARCHAR},
-      </if>
-      <if test="paramStr != null" >
-        param_str = #{paramStr,jdbcType=VARCHAR},
-      </if>
-      <if test="isSecurityCode != null" >
-        is_security_code = #{isSecurityCode,jdbcType=CHAR},
-      </if>
-      <if test="validTime != null" >
-        valid_time = #{validTime,jdbcType=INTEGER},
-      </if>
-      <if test="merchantId != null" >
-      			merchant_id = #{merchantId,jdbcType=INTEGER},
-      		</if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.towcent.base.common.model.NotifySmsTemplate" >
-    update notify_sms_template
-    set sms_type = #{smsType,jdbcType=TINYINT},
-      content = #{content,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      create_by = #{createBy,jdbcType=VARCHAR},
-      update_date = #{updateDate,jdbcType=TIMESTAMP},
-      update_by = #{updateBy,jdbcType=VARCHAR},
-      sms_template_id = #{smsTemplateId,jdbcType=VARCHAR},
-      signature = #{signature,jdbcType=VARCHAR},
-      param_str = #{paramStr,jdbcType=VARCHAR},
-      is_security_code = #{isSecurityCode,jdbcType=CHAR},
-      valid_time = #{validTime,jdbcType=INTEGER},
-      merchant_id = #{merchantId,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+<mapper namespace="com.towcent.base.dal.db.NotifySmsTemplateMapper">
+	<resultMap id="BaseResultMap"
+		type="com.towcent.base.common.model.NotifySmsTemplate">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="sms_type" property="smsType" jdbcType="TINYINT" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+		<result column="sms_template_id" property="smsTemplateId"
+			jdbcType="VARCHAR" />
+		<result column="signature" property="signature" jdbcType="VARCHAR" />
+		<result column="param_str" property="paramStr" jdbcType="VARCHAR" />
+		<result column="is_security_code" property="isSecurityCode"
+			jdbcType="CHAR" />
+		<result column="valid_time" property="validTime" jdbcType="INTEGER" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, sms_type, content, create_date, create_by, update_date, update_by,
+		sms_template_id,
+		signature, param_str, is_security_code, valid_time, merchant_id
+	</sql>
+	<sql id="condition">
+		<if test="null!=params">
+			<if test="params.id != null">
+				and id = #{params.id,jdbcType=INTEGER}
+			</if>
+			<if test="params.smsType != null">
+				and sms_type = #{params.smsType,jdbcType=TINYINT}
+			</if>
+			<if test="params.content != null and '' != params.content">
+				and content = #{params.content,jdbcType=VARCHAR}
+			</if>
+			<if test="params.createDate != null">
+				and create_date = #{params.createDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="params.createBy != null">
+				and create_by = #{params.createBy,jdbcType=VARCHAR}
+			</if>
+			<if test="params.updateDate != null">
+				and update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="params.updateBy != null">
+				and update_by = #{params.updateBy,jdbcType=VARCHAR}
+			</if>
+			<if test="params.smsTemplateId != null and '' != params.smsTemplateId">
+				and sms_template_id = #{params.smsTemplateId,jdbcType=VARCHAR}
+			</if>
+			<if test="params.signature != null and '' != params.signature">
+				and signature = #{params.signature,jdbcType=VARCHAR}
+			</if>
+			<if test="params.paramStr != null and '' != params.paramStr">
+				and param_str = #{params.paramStr,jdbcType=VARCHAR}
+			</if>
+			<if test="params.isSecurityCode != null and '' != params.isSecurityCode">
+				and is_security_code = #{params.isSecurityCode,jdbcType=CHAR}
+			</if>
+			<if test="params.validTime != null">
+				and valid_time = #{params.validTime,jdbcType=INTEGER}
+			</if>
+			<if test="params.merchantId != null">
+				and merchant_id = #{params.merchantId,jdbcType=INTEGER}
+			</if>
+		</if>
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from notify_sms_template
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from notify_sms_template
+		where 1=1
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer">
+		select count(1) as s from notify_sms_template where 1=1
+		<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap"
+		parameterType="com.towcent.base.common.page.SimplePage">
+		select
+		<include refid="Base_Column_List" />
+		from notify_sms_template a
+		<where>
+			<include refid="condition" />
+		</where>
+		<if test="orderByField != null and ''!=orderByField">
+			order by ${orderByField}
+			<if test="orderByField">
+				${orderBy}
+			</if>
+		</if>
+		limit #{startRowNum} ,#{pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from notify_sms_template
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.base.common.model.NotifySmsTemplate">
+		delete from notify_sms_template
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.base.common.model.NotifySmsTemplate">
+		insert into notify_sms_template (id, sms_type, content,
+		create_date, create_by, update_date,
+		update_by, sms_template_id, signature,
+		param_str, is_security_code, valid_time,
+		merchant_id
+		)
+		values (#{id,jdbcType=INTEGER}, #{smsType,jdbcType=TINYINT},
+		#{content,jdbcType=VARCHAR},
+		#{createDate,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+		#{updateBy,jdbcType=VARCHAR}, #{smsTemplateId,jdbcType=VARCHAR},
+		#{signature,jdbcType=VARCHAR},
+		#{paramStr,jdbcType=VARCHAR}, #{isSecurityCode,jdbcType=CHAR},
+		#{validTime,jdbcType=INTEGER},#{merchantId,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.base.common.model.NotifySmsTemplate">
+		insert into notify_sms_template
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="smsType != null">
+				sms_type,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+			<if test="smsTemplateId != null">
+				sms_template_id,
+			</if>
+			<if test="signature != null">
+				signature,
+			</if>
+			<if test="paramStr != null">
+				param_str,
+			</if>
+			<if test="isSecurityCode != null">
+				is_security_code,
+			</if>
+			<if test="validTime != null">
+				valid_time,
+			</if>
+			<if test="merchantId != null">
+				merchant_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="smsType != null">
+				#{smsType,jdbcType=TINYINT},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				#{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="smsTemplateId != null">
+				#{smsTemplateId,jdbcType=VARCHAR},
+			</if>
+			<if test="signature != null">
+				#{signature,jdbcType=VARCHAR},
+			</if>
+			<if test="paramStr != null">
+				#{paramStr,jdbcType=VARCHAR},
+			</if>
+			<if test="isSecurityCode != null">
+				#{isSecurityCode,jdbcType=CHAR},
+			</if>
+			<if test="validTime != null">
+				#{validTime,jdbcType=INTEGER},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.common.model.NotifySmsTemplate">
+		update notify_sms_template
+		<set>
+			<if test="smsType != null">
+				sms_type = #{smsType,jdbcType=TINYINT},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="smsTemplateId != null">
+				sms_template_id = #{smsTemplateId,jdbcType=VARCHAR},
+			</if>
+			<if test="signature != null">
+				signature = #{signature,jdbcType=VARCHAR},
+			</if>
+			<if test="paramStr != null">
+				param_str = #{paramStr,jdbcType=VARCHAR},
+			</if>
+			<if test="isSecurityCode != null">
+				is_security_code = #{isSecurityCode,jdbcType=CHAR},
+			</if>
+			<if test="validTime != null">
+				valid_time = #{validTime,jdbcType=INTEGER},
+			</if>
+			<if test="merchantId != null">
+				merchant_id = #{merchantId,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.towcent.base.common.model.NotifySmsTemplate">
+		update notify_sms_template
+		set sms_type = #{smsType,jdbcType=TINYINT},
+		content = #{content,jdbcType=VARCHAR},
+		create_date = #{createDate,jdbcType=TIMESTAMP},
+		create_by = #{createBy,jdbcType=VARCHAR},
+		update_date = #{updateDate,jdbcType=TIMESTAMP},
+		update_by = #{updateBy,jdbcType=VARCHAR},
+		sms_template_id = #{smsTemplateId,jdbcType=VARCHAR},
+		signature = #{signature,jdbcType=VARCHAR},
+		param_str = #{paramStr,jdbcType=VARCHAR},
+		is_security_code = #{isSecurityCode,jdbcType=CHAR},
+		valid_time = #{validTime,jdbcType=INTEGER},
+		merchant_id = #{merchantId,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
 </mapper>

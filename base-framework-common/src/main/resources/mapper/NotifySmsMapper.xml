@@ -1,216 +1,223 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.towcent.base.dal.db.NotifySmsMapper" >
-  <resultMap id="BaseResultMap" type="com.towcent.base.common.model.NotifySms" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="content" property="content" jdbcType="VARCHAR" />
-    <result column="sms_type" property="smsType" jdbcType="TINYINT" />
-    <result column="sms_status" property="smsStatus" jdbcType="TINYINT" />
-    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
-    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
-    <result column="smsid" property="smsid" jdbcType="VARCHAR" />
-    <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />	
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, phone, content, sms_type, sms_status, create_date, update_date, remarks, smsid, merchant_id
-  </sql>
-  <sql id="condition" >
-    <if test="null!=params" >
-      <if test="params.id != null" >
-        and id = #{params.id,jdbcType=INTEGER}
-      </if>
-      <if test="params.phone != null and '' != params.phone" >
-        and phone = #{params.phone,jdbcType=VARCHAR}
-      </if>
-      <if test="params.content != null and '' != params.content" >
-        and content = #{params.content,jdbcType=VARCHAR}
-      </if>
-      <if test="params.smsType != null" >
-        and sms_type = #{params.smsType,jdbcType=TINYINT}
-      </if>
-      <if test="params.smsStatus != null" >
-        and sms_status = #{params.smsStatus,jdbcType=TINYINT}
-      </if>
-      <if test="params.createDate != null" >
-        and create_date = #{params.createDate,jdbcType=TIMESTAMP}
-      </if>
-      <if test="params.updateDate != null" >
-        and update_date = #{params.updateDate,jdbcType=TIMESTAMP}
-      </if>
-      <if test="params.remarks != null and '' != params.remarks" >
-        and remarks = #{params.remarks,jdbcType=VARCHAR}
-      </if>
-      <if test="params.smsid != null and '' != params.smsid" >
-        and smsid = #{params.smsid,jdbcType=VARCHAR}
-      </if>
-      <if test="params.merchantId != null" >
-       	and merchant_id = #{params.merchantId,jdbcType=INTEGER}
-      </if>
-    </if>
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from notify_sms
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
-    select 
-    <include refid="Base_Column_List" />
-    from notify_sms
-    where 1=1
-    <include refid="condition" />
-  </select>
-  <select id="selectCount" resultType="java.lang.Integer" >
-    select count(1) as s from notify_sms where 1=1 
-    <include refid="condition" />
-  </select>
-  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
-    select 
-    <include refid="Base_Column_List" />
-    from notify_sms
-    where 1=1 
-    <include refid="condition" />
-    <if test="orderByField != null and ''!=orderByField" >
-      order by ${orderByField} 
-      <if test="orderByField" >
-        ${orderBy}
-      </if>
-    </if>
-    limit #{page.startRowNum} ,#{page.pageSize}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from notify_sms
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.base.common.model.NotifySms" >
-    delete from notify_sms
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.towcent.base.common.model.NotifySms" >
-    insert into notify_sms (id, phone, content, 
-      sms_type, sms_status, create_date, 
-      update_date, remarks, smsid,
-			merchant_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{smsType,jdbcType=TINYINT}, #{smsStatus,jdbcType=TINYINT}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{smsid,jdbcType=VARCHAR},#{merchantId,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.towcent.base.common.model.NotifySms" >
-    insert into notify_sms
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="phone != null" >
-        phone,
-      </if>
-      <if test="content != null" >
-        content,
-      </if>
-      <if test="smsType != null" >
-        sms_type,
-      </if>
-      <if test="smsStatus != null" >
-        sms_status,
-      </if>
-      <if test="createDate != null" >
-        create_date,
-      </if>
-      <if test="updateDate != null" >
-        update_date,
-      </if>
-      <if test="remarks != null" >
-        remarks,
-      </if>
-      <if test="smsid != null" >
-        smsid,
-      </if>
-      <if test="merchantId != null" >
-      			merchant_id,
-      		</if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="phone != null" >
-        #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null" >
-        #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="smsType != null" >
-        #{smsType,jdbcType=TINYINT},
-      </if>
-      <if test="smsStatus != null" >
-        #{smsStatus,jdbcType=TINYINT},
-      </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateDate != null" >
-        #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remarks != null" >
-        #{remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="smsid != null" >
-        #{smsid,jdbcType=VARCHAR},
-      </if>
-      <if test="merchantId != null" >
-      			#{merchantId,jdbcType=INTEGER},
-      		</if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.common.model.NotifySms" >
-    update notify_sms
-    <set >
-      <if test="phone != null" >
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="smsType != null" >
-        sms_type = #{smsType,jdbcType=TINYINT},
-      </if>
-      <if test="smsStatus != null" >
-        sms_status = #{smsStatus,jdbcType=TINYINT},
-      </if>
-      <if test="createDate != null" >
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateDate != null" >
-        update_date = #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remarks != null" >
-        remarks = #{remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="smsid != null" >
-        smsid = #{smsid,jdbcType=VARCHAR},
-      </if>
-      <if test="merchantId != null" >
-      			merchant_id = #{merchantId,jdbcType=INTEGER},
-      		</if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.towcent.base.common.model.NotifySms" >
-    update notify_sms
-    set phone = #{phone,jdbcType=VARCHAR},
-      content = #{content,jdbcType=VARCHAR},
-      sms_type = #{smsType,jdbcType=TINYINT},
-      sms_status = #{smsStatus,jdbcType=TINYINT},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      update_date = #{updateDate,jdbcType=TIMESTAMP},
-      remarks = #{remarks,jdbcType=VARCHAR},
-      smsid = #{smsid,jdbcType=VARCHAR},
-      merchant_id = #{merchantId,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+<mapper namespace="com.towcent.base.dal.db.NotifySmsMapper">
+	<resultMap id="BaseResultMap" type="com.towcent.base.common.model.NotifySms">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="sms_type" property="smsType" jdbcType="TINYINT" />
+		<result column="sms_status" property="smsStatus" jdbcType="TINYINT" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="smsid" property="smsid" jdbcType="VARCHAR" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, phone, content, sms_type, sms_status, create_date, update_date,
+		remarks, smsid, merchant_id
+	</sql>
+	<sql id="condition">
+		<if test="null!=params">
+			<if test="params.id != null">
+				and id = #{params.id,jdbcType=INTEGER}
+			</if>
+			<if test="params.phone != null and '' != params.phone">
+				and phone = #{params.phone,jdbcType=VARCHAR}
+			</if>
+			<if test="params.content != null and '' != params.content">
+				and content = #{params.content,jdbcType=VARCHAR}
+			</if>
+			<if test="params.smsType != null">
+				and sms_type = #{params.smsType,jdbcType=TINYINT}
+			</if>
+			<if test="params.smsStatus != null">
+				and sms_status = #{params.smsStatus,jdbcType=TINYINT}
+			</if>
+			<if test="params.createDate != null">
+				and create_date = #{params.createDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="params.updateDate != null">
+				and update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="params.remarks != null and '' != params.remarks">
+				and remarks = #{params.remarks,jdbcType=VARCHAR}
+			</if>
+			<if test="params.smsid != null and '' != params.smsid">
+				and smsid = #{params.smsid,jdbcType=VARCHAR}
+			</if>
+			<if test="params.merchantId != null">
+				and merchant_id = #{params.merchantId,jdbcType=INTEGER}
+			</if>
+		</if>
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from notify_sms
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from notify_sms
+		where 1=1
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer">
+		select count(1) as s from notify_sms where 1=1
+		<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap"
+		parameterType="com.towcent.base.common.page.SimplePage">
+		select
+		<include refid="Base_Column_List" />
+		from notify_sms
+		<where>
+			<include refid="condition" />
+		</where>
+		<if test="orderByField != null and ''!=orderByField">
+			order by ${orderByField}
+			<if test="orderByField">
+				${orderBy}
+			</if>
+		</if>
+		limit #{startRowNum} ,#{pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from notify_sms
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.base.common.model.NotifySms">
+		delete from notify_sms
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.base.common.model.NotifySms">
+		insert into notify_sms (id, phone, content,
+		sms_type, sms_status, create_date,
+		update_date, remarks, smsid,
+		merchant_id
+		)
+		values (#{id,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR},
+		#{content,jdbcType=VARCHAR},
+		#{smsType,jdbcType=TINYINT}, #{smsStatus,jdbcType=TINYINT}, #{createDate,jdbcType=TIMESTAMP},
+		#{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+		#{smsid,jdbcType=VARCHAR},#{merchantId,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.base.common.model.NotifySms">
+		insert into notify_sms
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="smsType != null">
+				sms_type,
+			</if>
+			<if test="smsStatus != null">
+				sms_status,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="smsid != null">
+				smsid,
+			</if>
+			<if test="merchantId != null">
+				merchant_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=VARCHAR},
+			</if>
+			<if test="smsType != null">
+				#{smsType,jdbcType=TINYINT},
+			</if>
+			<if test="smsStatus != null">
+				#{smsStatus,jdbcType=TINYINT},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="smsid != null">
+				#{smsid,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantId != null">
+				#{merchantId,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.common.model.NotifySms">
+		update notify_sms
+		<set>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="smsType != null">
+				sms_type = #{smsType,jdbcType=TINYINT},
+			</if>
+			<if test="smsStatus != null">
+				sms_status = #{smsStatus,jdbcType=TINYINT},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="smsid != null">
+				smsid = #{smsid,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantId != null">
+				merchant_id = #{merchantId,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.towcent.base.common.model.NotifySms">
+		update notify_sms
+		set phone = #{phone,jdbcType=VARCHAR},
+		content = #{content,jdbcType=VARCHAR},
+		sms_type = #{smsType,jdbcType=TINYINT},
+		sms_status = #{smsStatus,jdbcType=TINYINT},
+		create_date = #{createDate,jdbcType=TIMESTAMP},
+		update_date = #{updateDate,jdbcType=TIMESTAMP},
+		remarks = #{remarks,jdbcType=VARCHAR},
+		smsid = #{smsid,jdbcType=VARCHAR},
+		merchant_id = #{merchantId,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
 </mapper>

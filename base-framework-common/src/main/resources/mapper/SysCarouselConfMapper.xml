@@ -84,7 +84,8 @@
 	  	select count(1) as s from sys_carousel_conf a where 1=1 
 	  	<include refid="condition" />
 	</select>
-	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="com.towcent.base.common.page.SimplePage" >
 	  	select 
 	  	<include refid="Base_Column_List" />
 	  	from sys_carousel_conf a
@@ -97,7 +98,7 @@
 	    	<!--</if>-->
 	  	<!--</if>-->
 		order by carousel_type, sort
-	  	limit #{page.startRowNum} ,#{page.pageSize}
+	  	limit #{startRowNum} ,#{pageSize}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
 	  	delete from sys_carousel_conf
