@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"  
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task" xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd"
+	default-lazy-init="true">	
+	
+	<context:property-placeholder location="classpath:application.properties" ignore-unresolvable="true" ignore-resource-not-found="true" order="2" system-properties-mode="NEVER"/>
+	
+	<!-- 加载spring配置 -->
+	<!-- 加载配置属性文件 -->
+    <import resource="/spring-conf.xml"/>
+    
+	<import resource="classpath:META-INF/spring-base-db.xml" />
+	<import resource="classpath:META-INF/spring-base-redis.xml" />
+    <import resource="classpath*:META-INF/spring-base-ftp.xml" />
+		
+	<!-- 扫描basePackage下所有接口 -->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate" />
+        <property name="basePackage" value="com.towcent.base.dal.db"/>
+        <property name="annotationClass" value="com.towcent.base.common.annotation.MyBatisDao"/>
+    </bean>   
+    
+    <context:component-scan base-package="com.towcent.base"></context:component-scan>
+    
+    <util:properties id="wxProperties" location="classpath:/application.properties" />
+</beans>

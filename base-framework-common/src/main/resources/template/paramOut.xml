@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>paramIn</name>
+	<filePath>src/main/java/${packageName}/${moduleName}/vo/output</filePath>
+	<fileName>${ClassName}${FunctionName}Out.java</fileName>
+	<content><![CDATA[
+package ${packageName}.${moduleName}.vo.output;
+
+<#list outImportList as i>
+import ${i};
+</#list>
+
+import java.io.Serializable;
+
+import lombok.Data;
+
+/**
+ * ${interNo} ${interName}
+ * @author ${functionAuthor}
+ * @version ${functionVersion}
+ */
+@Data
+public class ${ClassName}${FunctionName}Out implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
+	<#-- 生成字段属性 -->
+	<#list outParamList as c>
+		<#if c.simpleJavaType=='Date'>
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+		</#if>
+	private ${c.simpleJavaType} ${c.fieldName};		<#if c.description??>// ${c.description}</#if>	
+	</#list>
+	
+}]]>
+	</content>
+</template>

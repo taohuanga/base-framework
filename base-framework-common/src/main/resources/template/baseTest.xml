@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>test</name>
+	<filePath>src/test/java/${packageName}/client/${moduleName}</filePath>
+	<fileName>${ClassName}ControllerTest.java</fileName>
+	<content><![CDATA[
+package ${packageName}.client.${moduleName};
+
+import java.io.IOException;
+
+import org.junit.Test;
+
+import ${packageName}.client.BaseAppTest;
+
+public class ${ClassName}ControllerTest extends BaseAppTest {
+
+	static {
+		
+	}
+}
+]]>
+	</content>
+</template>

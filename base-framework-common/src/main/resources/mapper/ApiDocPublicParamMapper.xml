@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.base.dal.db.ApiDocPublicParamMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.base.common.model.ApiDocPublicParam" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="param_name" property="paramName" jdbcType="VARCHAR" />
+		<result column="param_desc" property="paramDesc" jdbcType="VARCHAR" />
+		<result column="param_type" property="paramType" jdbcType="VARCHAR" />
+		<result column="val_declare" property="valDeclare" jdbcType="VARCHAR" />
+		<result column="required" property="required" jdbcType="CHAR" />
+		<result column="regular" property="regular" jdbcType="VARCHAR" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	a.id, a.param_name, a.param_desc, a.param_type, a.val_declare, a.required, a.regular
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null" >
+        		and a.id = #{params.id,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.paramName != null and '' != params.paramName" >
+        		and a.param_name = #{params.paramName,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.paramDesc != null and '' != params.paramDesc" >
+        		and a.param_desc = #{params.paramDesc,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.paramType != null and '' != params.paramType" >
+        		and a.param_type = #{params.paramType,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.valDeclare != null and '' != params.valDeclare" >
+        		and a.val_declare = #{params.valDeclare,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.required != null and '' != params.required" >
+        		and a.required = #{params.required,jdbcType=CHAR}
+      		</if>
+      		<if test="params.regular != null and '' != params.regular" >
+        		and a.regular = #{params.regular,jdbcType=VARCHAR}
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from api_doc_public_param a
+		where a.id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from api_doc_public_param a 
+		where 1=1 
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from api_doc_public_param a where 1=1
+	  	<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from api_doc_public_param a
+	  	where 1=1
+	  	<include refid="condition" />
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from api_doc_public_param
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.base.common.model.ApiDocPublicParam" >
+	  	delete from api_doc_public_param
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.base.common.model.ApiDocPublicParam" useGeneratedKeys="true" keyProperty="id">
+    	insert into api_doc_public_param (
+					id,
+			param_name,
+			param_desc,
+			param_type,
+			val_declare,
+			required,
+			regular
+    	)
+    	values (
+					#{id,jdbcType=INTEGER},
+			#{paramName,jdbcType=VARCHAR},
+			#{paramDesc,jdbcType=VARCHAR},
+			#{paramType,jdbcType=VARCHAR},
+			#{valDeclare,jdbcType=VARCHAR},
+			#{required,jdbcType=CHAR},
+			#{regular,jdbcType=VARCHAR}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.base.common.model.ApiDocPublicParam" useGeneratedKeys="true" keyProperty="id" >
+    	insert into api_doc_public_param 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+      			id,
+      		</if>
+      		<if test="paramName != null and '' != paramName" >
+      			param_name,
+      		</if>
+      		<if test="paramDesc != null and '' != paramDesc" >
+      			param_desc,
+      		</if>
+      		<if test="paramType != null and '' != paramType" >
+      			param_type,
+      		</if>
+      		<if test="valDeclare != null and '' != valDeclare" >
+      			val_declare,
+      		</if>
+      		<if test="required != null and '' != required" >
+      			required,
+      		</if>
+      		<if test="regular != null and '' != regular" >
+      			regular,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+	  			#{id,jdbcType=INTEGER},
+	  		</if>
+      		<if test="paramName != null and '' != paramName" >
+	  			#{paramName,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="paramDesc != null and '' != paramDesc" >
+	  			#{paramDesc,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="paramType != null and '' != paramType" >
+	  			#{paramType,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="valDeclare != null and '' != valDeclare" >
+	  			#{valDeclare,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="required != null and '' != required" >
+	  			#{required,jdbcType=CHAR},
+	  		</if>
+      		<if test="regular != null and '' != regular" >
+	  			#{regular,jdbcType=VARCHAR},
+	  		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.common.model.ApiDocPublicParam" >
+    	update api_doc_public_param 
+	    <set >
+	      	<if test="id != null" >
+	        	id = #{id,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="paramName != null and '' != paramName" >
+	        	param_name = #{paramName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="paramDesc != null and '' != paramDesc" >
+	        	param_desc = #{paramDesc,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="paramType != null and '' != paramType" >
+	        	param_type = #{paramType,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="valDeclare != null and '' != valDeclare" >
+	        	val_declare = #{valDeclare,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="required != null and '' != required" >
+	        	required = #{required,jdbcType=CHAR},
+	      	</if>
+	      	<if test="regular != null and '' != regular" >
+	        	regular = #{regular,jdbcType=VARCHAR},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.base.common.model.ApiDocPublicParam" >
+    	update api_doc_public_param 
+    	set 
+      				#{id,jdbcType=INTEGER},
+			#{paramName,jdbcType=VARCHAR},
+			#{paramDesc,jdbcType=VARCHAR},
+			#{paramType,jdbcType=VARCHAR},
+			#{valDeclare,jdbcType=VARCHAR},
+			#{required,jdbcType=CHAR},
+			#{regular,jdbcType=VARCHAR} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

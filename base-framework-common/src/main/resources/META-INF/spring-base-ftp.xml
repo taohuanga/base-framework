@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:int-ftp="http://www.springframework.org/schema/integration/ftp"
+       xsi:schemaLocation="http://www.springframework.org/schema/integration/ftp
+	http://www.springframework.org/schema/integration/ftp/spring-integration-ftp.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+		
+	<bean id="ftpClientFactory"
+		class="org.springframework.integration.ftp.session.DefaultFtpSessionFactory">
+		<property name="host" value="${image.ftp.server}" />
+		<property name="port" value="${image.ftp.port}" />
+		<property name="username" value="${image.ftp.username}" />
+		<property name="password" value="${image.ftp.password}" />
+	</bean>
+
+	<int:channel id="ftpChannel" />
+
+	<int-ftp:outbound-channel-adapter id="ftpOutbound"
+		channel="ftpChannel" charset="UTF-8"
+		remote-file-separator="/" auto-create-directory="true"
+		remote-directory-expression="headers['remote_dir']"
+		remote-filename-generator-expression="headers['remote_filename']"
+		session-factory="cachingSessionFactory" />
+
+	<bean id="cachingSessionFactory"
+		class="org.springframework.integration.file.remote.session.CachingSessionFactory">
+		<constructor-arg ref="ftpClientFactory" />
+		<constructor-arg value="100" />
+		<property name="sessionWaitTimeout" value="60000" />
+	</bean>
+	
+	<!-- 删除ftp文件-->
+    <int:channel id="toRemoveChannel">
+		<int:interceptors>
+			<int:wire-tap channel="logger"/>
+		</int:interceptors>
+	</int:channel> 
+
+	<int:logging-channel-adapter id="logger" log-full-message="true"/>
+
+	<int-ftp:outbound-gateway id="gatewayRM"
+		session-factory="cachingSessionFactory" 
+		expression="headers['file_remoteDirectory'] + '/' + headers['file_remoteFile']"
+		request-channel="toRemoveChannel"
+		command="rm"
+		reply-channel="nullChannel"/>
+</beans>

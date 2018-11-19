@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>service</name>
+	<filePath>src/main/java/${packageName}/${moduleName}/biz</filePath>
+	<fileName>${ClassName}Service.java</fileName>
+	<content><![CDATA[
+package ${packageName}.${moduleName}.biz;
+
+import com.towcent.base.common.vo.ResultVo;
+
+/**
+ * ${ClassName}Service
+ * @author ${functionAuthor}
+ * @version ${functionVersion}
+ */
+public interface ${ClassName}Service {
+}]]>
+	</content>
+</template>

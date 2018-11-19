@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.base.dal.db.ApiDocMainMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.base.common.model.ApiDocMain" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="interface_group" property="interfaceGroup" jdbcType="CHAR" />
+		<result column="interface_no" property="interfaceNo" jdbcType="VARCHAR" />
+		<result column="interface_name" property="interfaceName" jdbcType="VARCHAR" />
+		<result column="interface_desc" property="interfaceDesc" jdbcType="VARCHAR" />
+		<result column="request_type" property="requestType" jdbcType="VARCHAR" />
+		<result column="interface_url" property="interfaceUrl" jdbcType="VARCHAR" />
+		<result column="param_out_type" property="paramOutType" jdbcType="VARCHAR" />
+		<result column="is_login" property="isLogin" jdbcType="CHAR" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	a.id, a.interface_group, a.interface_no, a.interface_name, a.interface_desc, a.request_type, a.interface_url, a.param_out_type, a.is_login
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null" >
+        		and a.id = #{params.id,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.interfaceGroup != null and '' != params.interfaceGroup" >
+        		and a.interface_group = #{params.interfaceGroup,jdbcType=CHAR}
+      		</if>
+      		<if test="params.interfaceNo != null and '' != params.interfaceNo" >
+        		and a.interface_no = #{params.interfaceNo,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.interfaceName != null and '' != params.interfaceName" >
+        		and a.interface_name = #{params.interfaceName,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.interfaceDesc != null and '' != params.interfaceDesc" >
+        		and a.interface_desc = #{params.interfaceDesc,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.requestType != null and '' != params.requestType" >
+        		and a.request_type = #{params.requestType,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.interfaceUrl != null and '' != params.interfaceUrl" >
+        		and a.interface_url = #{params.interfaceUrl,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.paramOutType != null and '' != params.paramOutType" >
+        		and a.param_out_type = #{params.paramOutType,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.isLogin != null and '' != params.isLogin" >
+        		and a.is_login = #{params.isLogin,jdbcType=CHAR}
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from api_doc_main a
+		where a.id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from api_doc_main a 
+		where 1=1 
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from api_doc_main a where 1=1
+	  	<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from api_doc_main a
+	  	where 1=1
+	  	<include refid="condition" />
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from api_doc_main
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.base.common.model.ApiDocMain" >
+	  	delete from api_doc_main
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.base.common.model.ApiDocMain" useGeneratedKeys="true" keyProperty="id">
+    	insert into api_doc_main (
+					id,
+			interface_group,
+			interface_no,
+			interface_name,
+			interface_desc,
+			request_type,
+			interface_url,
+			param_out_type,
+			is_login
+    	)
+    	values (
+					#{id,jdbcType=INTEGER},
+			#{interfaceGroup,jdbcType=CHAR},
+			#{interfaceNo,jdbcType=VARCHAR},
+			#{interfaceName,jdbcType=VARCHAR},
+			#{interfaceDesc,jdbcType=VARCHAR},
+			#{requestType,jdbcType=VARCHAR},
+			#{interfaceUrl,jdbcType=VARCHAR},
+			#{paramOutType,jdbcType=VARCHAR},
+			#{isLogin,jdbcType=CHAR}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.base.common.model.ApiDocMain" useGeneratedKeys="true" keyProperty="id" >
+    	insert into api_doc_main 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+      			id,
+      		</if>
+      		<if test="interfaceGroup != null and '' != interfaceGroup" >
+      			interface_group,
+      		</if>
+      		<if test="interfaceNo != null and '' != interfaceNo" >
+      			interface_no,
+      		</if>
+      		<if test="interfaceName != null and '' != interfaceName" >
+      			interface_name,
+      		</if>
+      		<if test="interfaceDesc != null and '' != interfaceDesc" >
+      			interface_desc,
+      		</if>
+      		<if test="requestType != null and '' != requestType" >
+      			request_type,
+      		</if>
+      		<if test="interfaceUrl != null and '' != interfaceUrl" >
+      			interface_url,
+      		</if>
+      		<if test="paramOutType != null and '' != paramOutType" >
+      			param_out_type,
+      		</if>
+      		<if test="isLogin != null and '' != isLogin" >
+      			is_login,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+	  			#{id,jdbcType=INTEGER},
+	  		</if>
+      		<if test="interfaceGroup != null and '' != interfaceGroup" >
+	  			#{interfaceGroup,jdbcType=CHAR},
+	  		</if>
+      		<if test="interfaceNo != null and '' != interfaceNo" >
+	  			#{interfaceNo,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="interfaceName != null and '' != interfaceName" >
+	  			#{interfaceName,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="interfaceDesc != null and '' != interfaceDesc" >
+	  			#{interfaceDesc,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="requestType != null and '' != requestType" >
+	  			#{requestType,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="interfaceUrl != null and '' != interfaceUrl" >
+	  			#{interfaceUrl,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="paramOutType != null and '' != paramOutType" >
+	  			#{paramOutType,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="isLogin != null and '' != isLogin" >
+	  			#{isLogin,jdbcType=CHAR},
+	  		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.common.model.ApiDocMain" >
+    	update api_doc_main 
+	    <set >
+	      	<if test="id != null" >
+	        	id = #{id,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="interfaceGroup != null and '' != interfaceGroup" >
+	        	interface_group = #{interfaceGroup,jdbcType=CHAR},
+	      	</if>
+	      	<if test="interfaceNo != null and '' != interfaceNo" >
+	        	interface_no = #{interfaceNo,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="interfaceName != null and '' != interfaceName" >
+	        	interface_name = #{interfaceName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="interfaceDesc != null and '' != interfaceDesc" >
+	        	interface_desc = #{interfaceDesc,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="requestType != null and '' != requestType" >
+	        	request_type = #{requestType,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="interfaceUrl != null and '' != interfaceUrl" >
+	        	interface_url = #{interfaceUrl,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="paramOutType != null and '' != paramOutType" >
+	        	param_out_type = #{paramOutType,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="isLogin != null and '' != isLogin" >
+	        	is_login = #{isLogin,jdbcType=CHAR},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.base.common.model.ApiDocMain" >
+    	update api_doc_main 
+    	set 
+      				#{id,jdbcType=INTEGER},
+			#{interfaceGroup,jdbcType=CHAR},
+			#{interfaceNo,jdbcType=VARCHAR},
+			#{interfaceName,jdbcType=VARCHAR},
+			#{interfaceDesc,jdbcType=VARCHAR},
+			#{requestType,jdbcType=VARCHAR},
+			#{interfaceUrl,jdbcType=VARCHAR},
+			#{paramOutType,jdbcType=VARCHAR},
+			#{isLogin,jdbcType=CHAR} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+
+
+			http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	
+	<dubbo:consumer check="false" timeout="${dubbo.consumer.timeout}" retries="${dubbo.consumer.retries}"/>
+	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="${dubbo.application.name}_server" />
+	
+	<!-- 使用zookeeper注册中心暴露服务地址 
+	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
+	-->
+	
+	<dubbo:protocol name="dubbo" serialization="dubbo" port="${dubbo.port}" dispather="all" threadpool="cached" threads="5000"/>
+	
+	<!-- 调用服务x秒超时,retries=0不重试 -->
+	<dubbo:provider timeout="${dubbo.provider.timeout}" retries="${dubbo.provider.retries}" />
+	
+	<dubbo:annotation />
+	<!--
+		注解相关请参考
+		http://code.alibabatech.com/wiki/display/dubbo/Annotation+Config
+	 -->
+	 
+	<!-- 生成远程服务代理   调用服务 可使用注解： @Reference(version="1.0.0")
+	<dubbo:reference id="activeApiService" interface="com.yougou.active.api.IActiveApiService" version="2.0" />
+	 -->
+	<!-- 声明需要暴露的服务接口  公开服务 @Service(version="1.0.0")
+	<dubbo:service interface="com.yougou.logistics.uc.common.interfaces.AuthorityUserApi" ref="authorityUserApi" version="1.0"/>
+	-->
+
+	<!-- 短信接口 -->
+	<dubbo:service interface="com.towcent.base.manager.SmsNotifyApi" ref="smsNotifyApiImpl" version="${dubbo.api.version}" />
+	<!-- 百度接口 -->
+	<dubbo:service interface="com.towcent.base.manager.BaiduApi" ref="baiduApiImpl" version="${dubbo.api.version}" />
+	<!-- 二维码接口 -->
+	<dubbo:service interface="com.towcent.base.manager.QrcodeApi" ref="qrcodeApiImpl" version="${dubbo.api.version}" />
+	<!-- 支付配置接口 -->
+	<dubbo:service interface="com.towcent.base.manager.PayAccountApi" ref="payAccountApiImpl" version="${dubbo.api.version}" />
+	<!-- 基础公共接口 -->
+	<dubbo:service interface="com.towcent.base.manager.BaseCommonApi" ref="baseCommonApiImpl" version="${dubbo.api.version}" />
+	<!-- 推送接口 -->
+	<dubbo:service interface="com.towcent.base.manager.PushApi" ref="pushApiImpl" version="${dubbo.api.version}" />
+	
+</beans>

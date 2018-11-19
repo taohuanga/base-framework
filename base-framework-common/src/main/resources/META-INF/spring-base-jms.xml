@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:jms="http://www.springframework.org/schema/jms"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+            http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-4.1.xsd">
+	
+	<!-- 生产消费双方都需要 -->
+	<bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="${activemq.host}"></property>
+		<property name="userName" value="${activemq.username}"></property>
+		<property name="password" value="${activemq.password}"></property>
+		<property name="useCompression" value="${activemq.useCompression}"></property>
+		<property name="useAsyncSend" value="${activemq.useAsyncSend}"></property>
+		<property name="trustAllPackages" value="true"></property>
+	</bean>
+	
+	<!-- Spring Caching连接工厂 -->
+	<bean id="connectionFactory"
+		class="org.springframework.jms.connection.CachingConnectionFactory">
+		<property name="targetConnectionFactory" ref="jmsConnectionFactory" />
+		<property name="sessionCacheSize" value="4" />
+	</bean>
+	
+	<!-- 生产消费都需要此类 -->
+	<bean id="messageConverter" class="com.towcent.base.common.jms.BelleMessageConverter" />
+
+	<!-- 生产方使用此类 -->
+	<bean id="messageProducer" class="com.towcent.base.common.jms.BelleMessageProducer">
+		<property name="template" ref="jmsTemplate"></property>
+	</bean>
+	
+	<!-- 生产方使用配置 1、JmsTemplate 定义 -->
+	<bean id="jmsTemplate"
+		class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="messageConverter" ref="messageConverter" />
+		<!--  发布/订阅模式打开下列配置 -->
+		<property name="pubSubDomain" value="true" /> 
+        <property name="receiveTimeout" value="10000" />
+        <!-- 默认消息持久化,可设置不持久 -->
+       <!--  <property name="deliveryPersistent" value="false" /> -->
+	</bean>
+	
+	<!-- 消费方使用配置 3、ThreadPool Executor -->
+	<bean id="jmsThreadPoolExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="${activemq.threadpoolexecutor.corePoolSize}" />
+		<property name="maxPoolSize" value="${activemq.threadpoolexecutor.maxPoolSize}" />
+		<property name="queueCapacity" value="${activemq.threadpoolexecutor.queueCapacity}" />
+		<property name="keepAliveSeconds" value="${activemq.threadpoolexecutor.keepAliveSeconds}" />
+	</bean>
+	
+	<jms:annotation-driven/>
+	
+	<jms:listener-container factory-id="queueListenerContainer" connection-factory="connectionFactory" 
+		task-executor="jmsThreadPoolExecutor" concurrency="3-5" destination-type="queue" >
+	</jms:listener-container>
+	<jms:listener-container factory-id="topicListenerContainer" connection-factory="connectionFactory" 
+		task-executor="jmsThreadPoolExecutor" concurrency="3-5" destination-type="topic" >
+	</jms:listener-container>
+</beans>

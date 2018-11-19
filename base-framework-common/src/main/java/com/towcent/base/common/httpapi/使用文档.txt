@@ -1,0 +1,30 @@
+本组件用于简化并规范对接第三方API、并封装底层通讯协议
+
+HttpBaseConfig -- http请求配置类
+AbstractHttpProtocol -- http协议封装抽象类
+AbstractHttpRequest  -- http请求封装抽象类
+
+以对接京东VOP为例来说明：com.towcent.base.common.httpapi.example
+
+1. JDHttpConfig 继承 HttpBaseConfig
+2. JDVopHttpRequest 继承AbstractHttpRequest
+	实现以下方法:
+	RequestHeader buildRequestHeader();          设置请求头部
+	String getToken(RequestBody request);        如果接口需要验证token、需要实现该方法(如不需要，则为空)
+	String handleRequestUrl(RequestBody request);按接口需要拼接URL
+3. 根据接口实际情况重写BaseRequestBody、BaseResponse
+
+=======================业务接口=============================
+以获取余额接口为例说明：
+4. 根据接口参数和返回值，PriceGetBalanceReq、PriceGetBalanceResp。分别需要继承(3)。
+5. PriceGetBalanceRequest 继承 JDVopHttpRequest 
+	实现以下方法：
+	String getHttpMethodName()  该接口名称
+
+6. 调用接口:
+	PriceGetBalanceReq req = new PriceGetBalanceReq();
+	PriceGetBalanceResp resp = new PriceGetBalanceResp();
+	
+	req.setPayType(4);
+	resp = (PriceGetBalanceResp) balanceRequest.invoke(req, resp);
+

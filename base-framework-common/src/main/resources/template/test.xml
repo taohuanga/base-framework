@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>test</name>
+	<filePath>src/test/java/${packageName}/client/${moduleName}</filePath>
+	<fileName>${ClassName}ControllerTest.java</fileName>
+	<content><![CDATA[
+import ${packageName}.${moduleName}.vo.input.${ClassName}${FunctionName}In;
+		descMap.put("${moduleName}/${ClassName}/${functionName}", "${interName}");
+	
+	
+	@Test
+	public void ${functionName}() throws IOException {
+		String path = "${moduleName}/${ClassName}/${functionName}";
+		${ClassName}${FunctionName}In paramVo = new ${ClassName}${FunctionName}In();
+		this.setCommonParam(paramVo);
+		
+		<#list enParamList as c>
+			<#if c.fieldName == 'tokenId'>
+		this.setLoginFlag(paramVo);	
+			<#else>
+			<#if c.simpleJavaType == 'Integer'>
+		paramVo.set${c.fieldName?cap_first}(1);
+			<#elseif c.simpleJavaType == 'String'>
+		paramVo.set${c.fieldName?cap_first}("");
+			<#elseif c.simpleJavaType == 'Date'>
+		paramVo.set${c.fieldName?cap_first}(new Date());
+			<#elseif c.simpleJavaType == 'Double'>
+		paramVo.set${c.fieldName?cap_first}(BigDecimal.ZERO);
+			<#else>
+		paramVo.set${c.fieldName?cap_first}("");
+			</#if>
+			</#if>
+		</#list>
+		String content = sendHttp(paramVo, path);
+		System.out.println(content);
+	}
+
+]]>
+	</content>
+</template>

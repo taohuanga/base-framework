@@ -1,0 +1,68 @@
+主要介绍
+阿里大于：
+#sms setting
+sms.ali.url=https://eco.taobao.com/router/rest
+sms.ali.appkey=23815560
+sms.ali.secret=9d5b8749025ac350c7787ae5216655ec
+sms.test.flag=false
+sms.test.code=9999
+sms.code.length=4
+sms.project=ali
+
+#短信模板ID：SMS_66535176 (您的验证码是${code}。请不要把验证码泄露给其他人。)  --签名：袋鼠集市
+
+阿里云通信：
+#sms setting
+sms.ali.appkey=LTAIB2qnYkl1RFdp
+sms.ali.secret=draelrwH8e4KK5Dj92RgCE8C7W7u4D
+sms.test.flag=false
+sms.test.code=9999
+sms.code.length=4
+sms.project=aliyun
+
+#短信模板ID：SMS_80050076 (您的验证码是${code}。请不要把验证码泄露给其他人。)  --签名：医服天下
+
+# 创蓝短信：
+#sms setting                          -- 签名：东方通宝
+blue.sms.url=http://smssh1.253.com/msg/send/json
+blue.sms.account=N5020214
+blue.sms.password=U8eldE5A0j5c8a
+# 国际短信（国际短信模板id再原有模板加100）   -- 签名：DFTB
+blue.sms.int.url=http://intapi.253.com/send/json
+blue.sms.int.account=I3572322
+blue.sms.int.password=BxpejCiHoPb7d5
+sms.test.flag=false
+sms.test.code=9999
+sms.code.length=4
+sms.project=blue
+# 短信回调：http://xxxxx/api/sys/sms/blue/callback
+
+# 微网-乐信短信
+welink.sms.url=http://cf.51welink.com/submitdata/Service.asmx/g_Submit
+welink.sms.sname=dlxjlcs
+welink.sms.spwd=dlxjlcs123
+sms.test.flag=false
+sms.test.code=9999
+sms.code.length=4
+sms.project=welink
+# 短信回调：http://xxxxx/api/sys/sms/welink/callback
+
+# 中国网建
+smschinese.sms.url=http://utf8.api.smschinese.cn/
+smschinese.sms.uid=dofunctech
+smschinese.sms.key=1a30af2083c8c536847a
+sms.test.flag=false
+sms.test.code=9999
+sms.code.length=4
+sms.project=chinese
+
+# 容联*云通讯
+rongLian.sms.serverIP=app.cloopen.com
+rongLian.sms.serverPort=8883
+rongLian.sms.accountSid=8a216da85708749401572273d30f0f20
+rongLian.sms.accountToken=051cad92ea6f45c2b2e6f734b538bdfe
+rongLian.sms.appId=8a216da85708749401572273d46b0f27
+sms.test.flag=false
+sms.test.code=9999
+sms.code.length=4
+sms.project=rongLian

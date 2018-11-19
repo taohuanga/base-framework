@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>controller</name>
+	<filePath>src/main/java/${packageName}/${moduleName}/web</filePath>
+	<fileName>${ClassName}Controller.java</fileName>
+	<content><![CDATA[
+import ${packageName}.${moduleName}.vo.input.${ClassName}${FunctionName}In;
+	||
+	// ${interNo} ${interName}
+	@RequestMapping(value = "${functionName}") @Loggable
+	public ResultVo ${functionName}(@RequestBody ${ClassName}${FunctionName}In paramIn) {
+		return ${className}Service.${functionName}(paramIn);
+	}
+]]>
+	</content>
+</template>

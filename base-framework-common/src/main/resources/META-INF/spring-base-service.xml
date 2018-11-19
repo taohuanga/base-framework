@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+
+            http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- Activates scanning of @Service -->
+	<context:component-scan base-package="com.towcent.base.service">
+		<context:include-filter type="regex" expression="com.towcent.base.service.util.*"/>
+		<context:exclude-filter type="regex" expression="com.towcent.base.service.quartz.*"/>
+	</context:component-scan>
+	<task:annotation-driven />
+	
+	<!-- Activates scanning of @Service -->
+	<context:component-scan base-package="com.towcent.base.manager" >
+	
+	<!-- Activates scanning of @Service -->
+	<context:component-scan base-package="com.towcent.base.web.controller">
+	
+	<bean id="validator"  
+	    class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">  
+	    <property name="providerClass" value="org.hibernate.validator.HibernateValidator" />  
+	    <!-- <property name="validationMessageSource" ref="messageSource"/> -->
+	</bean>
+</beans>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.base.dal.db.SysImageConfMapper" >
+  <resultMap id="BaseResultMap" type="com.towcent.base.common.model.SysImageConf" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="image_type" property="imageType" jdbcType="INTEGER" />
+    <result column="image_path" property="imagePath" jdbcType="VARCHAR" />
+    <result column="sub_dir_format" property="subDirFormat" jdbcType="VARCHAR" />
+    <result column="is_original_compress" property="isOriginalCompress" jdbcType="CHAR" />
+    <result column="original_size" property="originalSize" jdbcType="VARCHAR" />
+    <result column="is_thumb" property="isThumb" jdbcType="CHAR" />
+    <result column="thumb_size" property="thumbSize" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />	
+  </resultMap>
+  <sql id="Base_Column_List" >
+    a.id, a.image_type, a.image_path, a.sub_dir_format, a.is_original_compress, a.original_size, 
+    a.is_thumb, a.thumb_size, a.update_date, a.merchant_id
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null" >
+        and a.id = #{params.id,jdbcType=INTEGER}
+      </if>
+      <if test="params.imageType != null" >
+        and a.image_type = #{params.imageType,jdbcType=INTEGER}
+      </if>
+      <if test="params.imagePath != null and '' != params.imagePath" >
+        and a.image_path = #{params.imagePath,jdbcType=VARCHAR}
+      </if>
+      <if test="params.subDirFormat != null and '' != params.subDirFormat" >
+        and a.sub_dir_format = #{params.subDirFormat,jdbcType=VARCHAR}
+      </if>
+      <if test="params.isOriginalCompress != null and '' != params.isOriginalCompress" >
+        and a.is_original_compress = #{params.isOriginalCompress,jdbcType=CHAR}
+      </if>
+      <if test="params.originalSize != null and '' != params.originalSize" >
+        and a.original_size = #{params.originalSize,jdbcType=VARCHAR}
+      </if>
+      <if test="params.isThumb != null and '' != params.isThumb" >
+        and a.is_thumb = #{params.isThumb,jdbcType=CHAR}
+      </if>
+      <if test="params.thumbSize != null and '' != params.thumbSize" >
+        and a.thumb_size = #{params.thumbSize,jdbcType=VARCHAR}
+      </if>
+      <if test="params.updateDate != null" >
+        and a.update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.merchantId != null" >
+	    and a.merchant_id = #{params.merchantId,jdbcType=INTEGER}
+	  </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_image_conf a
+    where a.id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_image_conf a
+    where 1=1 
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from sys_image_conf a where 1=1 
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_image_conf a
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by ${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+    limit #{page.startRowNum} ,#{page.pageSize}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_image_conf
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.base.common.model.SysImageConf" >
+    delete from sys_image_conf
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.towcent.base.common.model.SysImageConf" >
+    insert into sys_image_conf (id, image_type, image_path, 
+      sub_dir_format, is_original_compress, original_size, 
+      is_thumb, thumb_size, update_date,
+			merchant_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{imageType,jdbcType=INTEGER}, #{imagePath,jdbcType=VARCHAR}, 
+      #{subDirFormat,jdbcType=VARCHAR}, #{isOriginalCompress,jdbcType=CHAR}, #{originalSize,jdbcType=VARCHAR}, 
+      #{isThumb,jdbcType=CHAR}, #{thumbSize,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},#{merchantId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.towcent.base.common.model.SysImageConf" >
+    insert into sys_image_conf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="imageType != null" >
+        image_type,
+      </if>
+      <if test="imagePath != null" >
+        image_path,
+      </if>
+      <if test="subDirFormat != null" >
+        sub_dir_format,
+      </if>
+      <if test="isOriginalCompress != null" >
+        is_original_compress,
+      </if>
+      <if test="originalSize != null" >
+        original_size,
+      </if>
+      <if test="isThumb != null" >
+        is_thumb,
+      </if>
+      <if test="thumbSize != null" >
+        thumb_size,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="merchantId != null" >
+      			merchant_id,
+      		</if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="imageType != null" >
+        #{imageType,jdbcType=INTEGER},
+      </if>
+      <if test="imagePath != null" >
+        #{imagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="subDirFormat != null" >
+        #{subDirFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="isOriginalCompress != null" >
+        #{isOriginalCompress,jdbcType=CHAR},
+      </if>
+      <if test="originalSize != null" >
+        #{originalSize,jdbcType=VARCHAR},
+      </if>
+      <if test="isThumb != null" >
+        #{isThumb,jdbcType=CHAR},
+      </if>
+      <if test="thumbSize != null" >
+        #{thumbSize,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchantId != null" >
+      			#{merchantId,jdbcType=INTEGER},
+      		</if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.common.model.SysImageConf" >
+    update sys_image_conf
+    <set >
+      <if test="imageType != null" >
+        image_type = #{imageType,jdbcType=INTEGER},
+      </if>
+      <if test="imagePath != null" >
+        image_path = #{imagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="subDirFormat != null" >
+        sub_dir_format = #{subDirFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="isOriginalCompress != null" >
+        is_original_compress = #{isOriginalCompress,jdbcType=CHAR},
+      </if>
+      <if test="originalSize != null" >
+        original_size = #{originalSize,jdbcType=VARCHAR},
+      </if>
+      <if test="isThumb != null" >
+        is_thumb = #{isThumb,jdbcType=CHAR},
+      </if>
+      <if test="thumbSize != null" >
+        thumb_size = #{thumbSize,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchantId != null" >
+      			merchant_id = #{merchantId,jdbcType=INTEGER},
+      		</if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.towcent.base.common.model.SysImageConf" >
+    update sys_image_conf
+    set image_type = #{imageType,jdbcType=INTEGER},
+      image_path = #{imagePath,jdbcType=VARCHAR},
+      sub_dir_format = #{subDirFormat,jdbcType=VARCHAR},
+      is_original_compress = #{isOriginalCompress,jdbcType=CHAR},
+      original_size = #{originalSize,jdbcType=VARCHAR},
+      is_thumb = #{isThumb,jdbcType=CHAR},
+      thumb_size = #{thumbSize,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+			merchant_id = #{merchantId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

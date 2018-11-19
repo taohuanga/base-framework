@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>service</name>
+	<filePath>src/main/java/${packageName}/${moduleName}/biz/impl</filePath>
+	<fileName>${ClassName}ServiceImpl.java</fileName>
+	<content><![CDATA[
+package ${packageName}.${moduleName}.biz.impl;
+
+import static com.towcent.base.common.constants.BaseConstant.E_000;
+import static com.towcent.base.common.constants.BaseConstant.E_001;
+
+import org.springframework.stereotype.Service;
+
+import com.towcent.base.common.exception.RpcException;
+import com.towcent.base.common.service.BasePortalService;
+import com.towcent.base.common.vo.ResultVo;
+
+import ${packageName}.${moduleName}.biz.${ClassName}Service;
+
+/**
+ * ${ClassName}ServiceImpl
+ * @author ${functionAuthor}
+ * @version ${functionVersion}
+ */
+@Service
+public class ${ClassName}ServiceImpl extends BasePortalService implements ${ClassName}Service {
+	
+}]]>
+	</content>
+</template>

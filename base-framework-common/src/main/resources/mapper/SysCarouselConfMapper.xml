@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.base.dal.db.SysCarouselConfMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.base.common.model.SysCarouselConf" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="carousel_type" property="carouselType" jdbcType="CHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="is_href" property="isHref" jdbcType="CHAR" />
+		<result column="target_url" property="targetUrl" jdbcType="VARCHAR" />
+		<result column="sort" property="sort" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="INTEGER" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="INTEGER" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="del_flag" property="delFlag" jdbcType="CHAR" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />	
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	a.id, a.carousel_type, a.title, a.url, a.is_href, a.target_url, a.sort, a.remark, a.create_by, a.create_date, a.update_by, a.update_date, a.del_flag, a.merchant_id
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null" >
+        		and a.id = #{params.id,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.carouselType != null and '' != params.carouselType" >
+        		and a.carousel_type = #{params.carouselType,jdbcType=CHAR}
+      		</if>
+      		<if test="params.title != null and '' != params.title" >
+        		and a.title = #{params.title,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.url != null and '' != params.url" >
+        		and a.url = #{params.url,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.isHref != null and '' != params.isHref" >
+        		and a.is_href = #{params.isHref,jdbcType=CHAR}
+      		</if>
+      		<if test="params.targetUrl != null and '' != params.targetUrl" >
+        		and a.target_url = #{params.targetUrl,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.sort != null" >
+        		and a.sort = #{params.sort,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.remark != null and '' != params.remark" >
+        		and a.remark = #{params.remark,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.createBy != null" >
+        		and a.create_by = #{params.createBy,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.createDate != null" >
+        		and a.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.updateBy != null" >
+        		and a.update_by = #{params.updateBy,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.updateDate != null" >
+        		and a.update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.delFlag != null and '' != params.delFlag" >
+        		and a.del_flag = #{params.delFlag,jdbcType=CHAR}
+      		</if>
+      		<if test="params.merchantId != null" >
+	        	and a.merchant_id = #{params.merchantId,jdbcType=INTEGER}
+	      	</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from sys_carousel_conf a
+		where a.id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from sys_carousel_conf a 
+		where 1=1 
+		<include refid="condition" />
+		order by carousel_type, sort
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from sys_carousel_conf a where 1=1 
+	  	<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from sys_carousel_conf a
+	  	where 1=1 
+	  	<include refid="condition" />
+	  	<!--<if test="orderByField != null and ''!=orderByField" >-->
+	    	<!--order by ${orderByField} -->
+	    	<!--<if test="orderByField" >-->
+	      	<!--${orderBy}-->
+	    	<!--</if>-->
+	  	<!--</if>-->
+		order by carousel_type, sort
+	  	limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from sys_carousel_conf
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.base.common.model.SysCarouselConf" >
+	  	delete from sys_carousel_conf
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.base.common.model.SysCarouselConf" useGeneratedKeys="true" keyProperty="id">
+    	insert into sys_carousel_conf (
+					id,
+			carousel_type,
+			title,
+			url,
+			is_href,
+			target_url,
+			sort,
+			remark,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag,
+			merchant_id
+    	)
+    	values (
+					#{id,jdbcType=INTEGER},
+			#{carouselType,jdbcType=CHAR},
+			#{title,jdbcType=VARCHAR},
+			#{url,jdbcType=VARCHAR},
+			#{isHref,jdbcType=CHAR},
+			#{targetUrl,jdbcType=VARCHAR},
+			#{sort,jdbcType=INTEGER},
+			#{remark,jdbcType=VARCHAR},
+			#{createBy,jdbcType=INTEGER},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{updateBy,jdbcType=INTEGER},
+			#{updateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=CHAR},#{merchantId,jdbcType=INTEGER}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.base.common.model.SysCarouselConf" useGeneratedKeys="true" keyProperty="id" >
+    	insert into sys_carousel_conf 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+      			id,
+      		</if>
+      		<if test="carouselType != null and '' != carouselType" >
+      			carousel_type,
+      		</if>
+      		<if test="title != null and '' != title" >
+      			title,
+      		</if>
+      		<if test="url != null and '' != url" >
+      			url,
+      		</if>
+      		<if test="isHref != null and '' != isHref" >
+      			is_href,
+      		</if>
+      		<if test="targetUrl != null and '' != targetUrl" >
+      			target_url,
+      		</if>
+      		<if test="sort != null" >
+      			sort,
+      		</if>
+      		<if test="remark != null and '' != remark" >
+      			remark,
+      		</if>
+      		<if test="createBy != null" >
+      			create_by,
+      		</if>
+      		<if test="createDate != null" >
+      			create_date,
+      		</if>
+      		<if test="updateBy != null" >
+      			update_by,
+      		</if>
+      		<if test="updateDate != null" >
+      			update_date,
+      		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+      			del_flag,
+      		</if>
+      		<if test="merchantId != null" >
+      			merchant_id,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+	  			#{id,jdbcType=INTEGER},
+	  		</if>
+      		<if test="carouselType != null and '' != carouselType" >
+	  			#{carouselType,jdbcType=CHAR},
+	  		</if>
+      		<if test="title != null and '' != title" >
+	  			#{title,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="url != null and '' != url" >
+	  			#{url,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="isHref != null and '' != isHref" >
+	  			#{isHref,jdbcType=CHAR},
+	  		</if>
+      		<if test="targetUrl != null and '' != targetUrl" >
+	  			#{targetUrl,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="sort != null" >
+	  			#{sort,jdbcType=INTEGER},
+	  		</if>
+      		<if test="remark != null and '' != remark" >
+	  			#{remark,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="createBy != null" >
+	  			#{createBy,jdbcType=INTEGER},
+	  		</if>
+      		<if test="createDate != null" >
+	  			#{createDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="updateBy != null" >
+	  			#{updateBy,jdbcType=INTEGER},
+	  		</if>
+      		<if test="updateDate != null" >
+	  			#{updateDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="delFlag != null and '' != delFlag" >
+	  			#{delFlag,jdbcType=CHAR},
+	  		</if>
+	  		<if test="merchantId != null" >
+      			#{merchantId,jdbcType=INTEGER},
+      		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.common.model.SysCarouselConf" >
+    	update sys_carousel_conf 
+	    <set >
+	      	<if test="id != null" >
+	        	id = #{id,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="carouselType != null and '' != carouselType" >
+	        	carousel_type = #{carouselType,jdbcType=CHAR},
+	      	</if>
+	      	<if test="title != null and '' != title" >
+	        	title = #{title,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="url != null and '' != url" >
+	        	url = #{url,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="isHref != null and '' != isHref" >
+	        	is_href = #{isHref,jdbcType=CHAR},
+	      	</if>
+	      	<if test="targetUrl != null and '' != targetUrl" >
+	        	target_url = #{targetUrl,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="sort != null" >
+	        	sort = #{sort,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="remark != null and '' != remark" >
+	        	remark = #{remark,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="createBy != null" >
+	        	create_by = #{createBy,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="createDate != null" >
+	        	create_date = #{createDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="updateBy != null" >
+	        	update_by = #{updateBy,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="updateDate != null" >
+	        	update_date = #{updateDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="delFlag != null and '' != delFlag" >
+	        	del_flag = #{delFlag,jdbcType=CHAR},
+	      	</if>
+	      	<if test="merchantId != null" >
+      			merchant_id = #{merchantId,jdbcType=INTEGER},
+      		</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.base.common.model.SysCarouselConf" >
+    	update sys_carousel_conf 
+    	set 
+			carousel_type = #{carouselType,jdbcType=CHAR},
+			title = #{title,jdbcType=VARCHAR},
+			url = #{url,jdbcType=VARCHAR},
+			is_href = #{isHref,jdbcType=CHAR},
+			target_url = #{targetUrl,jdbcType=VARCHAR},
+			sort = #{sort,jdbcType=INTEGER},
+			remark = #{remark,jdbcType=VARCHAR},
+			create_by = #{createBy,jdbcType=INTEGER},
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+			update_by = #{updateBy,jdbcType=INTEGER},
+			update_date = #{updateDate,jdbcType=TIMESTAMP},
+			del_flag = #{delFlag,jdbcType=CHAR},
+			merchant_id = #{merchantId,jdbcType=INTEGER} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

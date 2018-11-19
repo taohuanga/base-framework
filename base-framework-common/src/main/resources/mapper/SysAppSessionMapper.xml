@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.base.dal.db.SysAppSessionMapper" >
+  <resultMap id="BaseResultMap" type="com.towcent.base.common.model.SysAppSession" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="token_id" property="tokenId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="app_type" property="appType" jdbcType="TINYINT" />
+    <result column="failure_time" property="failureTime" jdbcType="TIMESTAMP" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="device_no" property="deviceNo" jdbcType="VARCHAR" />
+    <result column="device_token" property="deviceToken" jdbcType="VARCHAR" />
+    <result column="sys_type" property="sysType" jdbcType="TINYINT" />
+    <result column="phone_model" property="phoneModel" jdbcType="VARCHAR" />
+    <result column="app_version" property="appVersion" jdbcType="INTEGER" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, token_id, user_id, account, app_type, failure_time, del_flag, device_no, device_token, 
+    sys_type, phone_model, app_version, update_date, open_id, merchant_id 
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null" >
+        and id = #{params.id,jdbcType=INTEGER}
+      </if>
+      <if test="params.userId != null" >
+        and user_id = #{params.userId,jdbcType=INTEGER}
+      </if>
+      <if test="params.tokenId != null and '' != params.tokenId" >
+        and token_id = #{params.tokenId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.account != null and '' != params.account" >
+        and account = #{params.account,jdbcType=VARCHAR}
+      </if>
+      <if test="params.appType != null" >
+        and app_type = #{params.appType,jdbcType=TINYINT}
+      </if>
+      <if test="params.failureTime != null" >
+        and failure_time &gt; #{params.failureTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.delFlag != null and '' != params.delFlag" >
+        and del_flag = #{params.delFlag,jdbcType=CHAR}
+      </if>
+      <if test="params.deviceNo != null and '' != params.deviceNo" >
+        and device_no = #{params.deviceNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.deviceToken != null and '' != params.deviceToken" >
+        and device_token = #{params.deviceToken,jdbcType=VARCHAR}
+      </if>
+      <if test="params.sysType != null" >
+        and sys_type = #{params.sysType,jdbcType=TINYINT}
+      </if>
+      <if test="params.phoneModel != null and '' != params.phoneModel" >
+        and phone_model = #{params.phoneModel,jdbcType=VARCHAR}
+      </if>
+      <if test="params.appVersion != null and '' != params.appVersion" >
+        and app_version = #{params.appVersion,jdbcType=INTEGER}
+      </if>
+      <if test="params.updateDate != null" >
+        and update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.merchantId != null" >
+        and merchant_id = #{params.merchantId,jdbcType=INTEGER}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_app_session
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_app_session
+    where 1=1 
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from sys_app_session where 1=1 
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_app_session
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by ${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+    limit #{page.startRowNum} ,#{page.pageSize}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_app_session
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.base.common.model.SysAppSession" >
+    delete from sys_app_session
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.towcent.base.common.model.SysAppSession" >
+    insert into sys_app_session (id, token_id, user_id, account, 
+      app_type, failure_time, del_flag, 
+      device_no, device_token, sys_type, 
+      phone_model, app_version, update_date, open_id, merchant_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{tokenId,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, 
+      #{appType,jdbcType=TINYINT}, #{failureTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=CHAR}, 
+      #{deviceNo,jdbcType=VARCHAR}, #{deviceToken,jdbcType=VARCHAR}, #{sysType,jdbcType=TINYINT}, 
+      #{phoneModel,jdbcType=VARCHAR}, #{appVersion,jdbcType=INTEGER}, #{updateDate,jdbcType=TIMESTAMP} , #{openId,jdbcType=VARCHAR},#{merchantId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.towcent.base.common.model.SysAppSession" >
+    insert into sys_app_session
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tokenId != null" >
+        token_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="appType != null" >
+        app_type,
+      </if>
+      <if test="failureTime != null" >
+        failure_time,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="deviceNo != null" >
+        device_no,
+      </if>
+      <if test="deviceToken != null" >
+        device_token,
+      </if>
+      <if test="sysType != null" >
+        sys_type,
+      </if>
+      <if test="phoneModel != null" >
+        phone_model,
+      </if>
+      <if test="appVersion != null" >
+        app_version,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="merchantId != null" >
+      			merchant_id,
+      		</if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tokenId != null" >
+        #{tokenId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="appType != null" >
+        #{appType,jdbcType=TINYINT},
+      </if>
+      <if test="failureTime != null" >
+        #{failureTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="deviceNo != null" >
+        #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceToken != null" >
+        #{deviceToken,jdbcType=VARCHAR},
+      </if>
+      <if test="sysType != null" >
+        #{sysType,jdbcType=TINYINT},
+      </if>
+      <if test="phoneModel != null" >
+        #{phoneModel,jdbcType=VARCHAR},
+      </if>
+      <if test="appVersion != null" >
+        #{appVersion,jdbcType=INTEGER},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null" >
+      			#{merchantId,jdbcType=INTEGER},
+      		</if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.common.model.SysAppSession" >
+    update sys_app_session
+    <set >
+      <if test="tokenId != null" >
+        token_id = #{tokenId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="appType != null" >
+        app_type = #{appType,jdbcType=TINYINT},
+      </if>
+      <if test="failureTime != null" >
+        failure_time = #{failureTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="deviceNo != null" >
+        device_no = #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceToken != null" >
+        device_token = #{deviceToken,jdbcType=VARCHAR},
+      </if>
+      <if test="sysType != null" >
+        sys_type = #{sysType,jdbcType=TINYINT},
+      </if>
+      <if test="phoneModel != null" >
+        phone_model = #{phoneModel,jdbcType=VARCHAR},
+      </if>
+      <if test="appVersion != null" >
+        app_version = #{appVersion,jdbcType=INTEGER},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null" >
+      			merchant_id = #{merchantId,jdbcType=INTEGER},
+      		</if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.towcent.base.common.model.SysAppSession" >
+    update sys_app_session
+    set token_id = #{tokenId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      account = #{account,jdbcType=VARCHAR},
+      app_type = #{appType,jdbcType=TINYINT},
+      failure_time = #{failureTime,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      device_no = #{deviceNo,jdbcType=VARCHAR},
+      device_token = #{deviceToken,jdbcType=VARCHAR},
+      sys_type = #{sysType,jdbcType=TINYINT},
+      phone_model = #{phoneModel,jdbcType=VARCHAR},
+      app_version = #{appVersion,jdbcType=INTEGER},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      open_id = #{openId,jdbcType=VARCHAR},
+			merchant_id = #{merchantId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <delete id="deleteByAccount">
+  	delete from sys_app_session where account = #{account} and app_type = #{appType} 
+  	AND merchant_id = #{merchantId} 
+  </delete>
+</mapper>

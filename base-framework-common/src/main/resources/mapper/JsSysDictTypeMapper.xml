@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.base.dal.db.JsSysDictTypeMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.base.common.model.JsSysDictType" >
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="dict_name" property="dictName" jdbcType="VARCHAR" />
+		<result column="dict_type" property="dictType" jdbcType="VARCHAR" />
+		<result column="is_sys" property="isSys" jdbcType="CHAR" />
+		<result column="status" property="status" jdbcType="CHAR" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	id, dict_name, dict_type, is_sys, status, create_by, create_date, update_by, update_date, remarks
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null and '' != params.id" >
+        		and id = #{params.id,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.dictName != null and '' != params.dictName" >
+        		and dict_name = #{params.dictName,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.dictType != null and '' != params.dictType" >
+        		and dict_type = #{params.dictType,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.isSys != null and '' != params.isSys" >
+        		and is_sys = #{params.isSys,jdbcType=CHAR}
+      		</if>
+      		<if test="params.status != null and '' != params.status" >
+        		and status = #{params.status,jdbcType=CHAR}
+      		</if>
+      		<if test="params.createBy != null and '' != params.createBy" >
+        		and create_by = #{params.createBy,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.createDate != null" >
+        		and create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.updateBy != null and '' != params.updateBy" >
+        		and update_by = #{params.updateBy,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.updateDate != null" >
+        		and update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.remarks != null and '' != params.remarks" >
+        		and remarks = #{params.remarks,jdbcType=VARCHAR}
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" >
+		select 
+		<include refid="Base_Column_List" />
+		from js_sys_dict_type 
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from js_sys_dict_type
+		<where>
+			<include refid="com.towcent.base.dal.db.JsSysDictTypeChildMapper.condition" />
+		</where>
+	</select>
+	<select id="selectOne" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from js_sys_dict_type
+		<where>
+			<include refid="com.towcent.base.dal.db.JsSysDictTypeChildMapper.condition" />
+		</where>
+		limit 0,1
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from js_sys_dict_type  
+		<where>
+	  		<include refid="com.towcent.base.dal.db.JsSysDictTypeChildMapper.condition" />
+	  	</where>
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="com.towcent.base.common.page.SimplePage" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from js_sys_dict_type 
+	  	<where>
+	  	<include refid="com.towcent.base.dal.db.JsSysDictTypeChildMapper.condition" />
+	  	</where>
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{startRowNum} ,#{pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from js_sys_dict_type
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.base.common.model.JsSysDictType" useGeneratedKeys="true" keyProperty="id">
+    	insert into js_sys_dict_type (
+					id,
+			dict_name,
+			dict_type,
+			is_sys,
+			status,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks
+    	)
+    	values (
+					#{id,jdbcType=VARCHAR},
+			#{dictName,jdbcType=VARCHAR},
+			#{dictType,jdbcType=VARCHAR},
+			#{isSys,jdbcType=CHAR},
+			#{status,jdbcType=CHAR},
+			#{createBy,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{updateBy,jdbcType=VARCHAR},
+			#{updateDate,jdbcType=TIMESTAMP},
+			#{remarks,jdbcType=VARCHAR}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.base.common.model.JsSysDictType" useGeneratedKeys="true" keyProperty="id" >
+    	insert into js_sys_dict_type 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null and '' != id" >
+      			id,
+      		</if>
+      		<if test="dictName != null and '' != dictName" >
+      			dict_name,
+      		</if>
+      		<if test="dictType != null and '' != dictType" >
+      			dict_type,
+      		</if>
+      		<if test="isSys != null and '' != isSys" >
+      			is_sys,
+      		</if>
+      		<if test="status != null and '' != status" >
+      			status,
+      		</if>
+      		<if test="createBy != null and '' != createBy" >
+      			create_by,
+      		</if>
+      		<if test="createDate != null" >
+      			create_date,
+      		</if>
+      		<if test="updateBy != null and '' != updateBy" >
+      			update_by,
+      		</if>
+      		<if test="updateDate != null" >
+      			update_date,
+      		</if>
+      		<if test="remarks != null and '' != remarks" >
+      			remarks,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null and '' != id" >
+	  			#{id,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="dictName != null and '' != dictName" >
+	  			#{dictName,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="dictType != null and '' != dictType" >
+	  			#{dictType,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="isSys != null and '' != isSys" >
+	  			#{isSys,jdbcType=CHAR},
+	  		</if>
+      		<if test="status != null and '' != status" >
+	  			#{status,jdbcType=CHAR},
+	  		</if>
+      		<if test="createBy != null and '' != createBy" >
+	  			#{createBy,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="createDate != null" >
+	  			#{createDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="updateBy != null and '' != updateBy" >
+	  			#{updateBy,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="updateDate != null" >
+	  			#{updateDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="remarks != null and '' != remarks" >
+	  			#{remarks,jdbcType=VARCHAR},
+	  		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.common.model.JsSysDictType" >
+    	update js_sys_dict_type 
+	    <set>
+	      	<if test="id != null and '' != id" >
+	        	id = #{id,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="dictName != null and '' != dictName" >
+	        	dict_name = #{dictName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="dictType != null and '' != dictType" >
+	        	dict_type = #{dictType,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="isSys != null and '' != isSys" >
+	        	is_sys = #{isSys,jdbcType=CHAR},
+	      	</if>
+	      	<if test="status != null and '' != status" >
+	        	status = #{status,jdbcType=CHAR},
+	      	</if>
+	      	<if test="createBy != null and '' != createBy" >
+	        	create_by = #{createBy,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="createDate != null" >
+	        	create_date = #{createDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="updateBy != null and '' != updateBy" >
+	        	update_by = #{updateBy,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="updateDate != null" >
+	        	update_date = #{updateDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="remarks != null and '' != remarks" >
+	        	remarks = #{remarks,jdbcType=VARCHAR},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.base.common.model.JsSysDictType" >
+    	update js_sys_dict_type 
+    	set 
+      	      		id = #{id,jdbcType=VARCHAR},
+      		dict_name = #{dictName,jdbcType=VARCHAR},
+      		dict_type = #{dictType,jdbcType=VARCHAR},
+      		is_sys = #{isSys,jdbcType=CHAR},
+      		status = #{status,jdbcType=CHAR},
+      		create_by = #{createBy,jdbcType=VARCHAR},
+      		create_date = #{createDate,jdbcType=TIMESTAMP},
+      		update_by = #{updateBy,jdbcType=VARCHAR},
+      		update_date = #{updateDate,jdbcType=TIMESTAMP},
+      		remarks = #{remarks,jdbcType=VARCHAR} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

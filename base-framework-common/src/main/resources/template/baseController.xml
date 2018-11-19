@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>controller</name>
+	<filePath>src/main/java/${packageName}/${moduleName}/web</filePath>
+	<fileName>${ClassName}Controller.java</fileName>
+	<content><![CDATA[
+package ${packageName}.${moduleName}.web;
+
+import javax.annotation.Resource;
+
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.towcent.base.common.annotation.Loggable;
+import com.towcent.base.common.vo.ResultVo;
+import com.towcent.base.common.web.BaseController;
+
+import ${packageName}.${moduleName}.biz.${ClassName}Service;
+
+/**
+ * ${ClassName}Controller
+ * @author ${functionAuthor}
+ * @version ${functionVersion}
+ */
+@RestController
+@RequestMapping(value = "${moduleName}/${className}", method = RequestMethod.POST)
+public class ${ClassName}Controller extends BaseController {
+
+	@Resource
+	private ${ClassName}Service ${className}Service;
+}]]>
+	</content>
+</template>

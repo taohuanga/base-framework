@@ -1,0 +1,773 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.base.dal.db.JsSysDictDataMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.base.common.model.JsSysDictData" >
+		<id column="dict_code" property="dictCode" jdbcType="VARCHAR" />
+		<result column="parent_code" property="parentCode" jdbcType="VARCHAR" />
+		<result column="parent_codes" property="parentCodes" jdbcType="VARCHAR" />
+		<result column="tree_sort" property="treeSort" jdbcType="DECIMAL" />
+		<result column="tree_sorts" property="treeSorts" jdbcType="VARCHAR" />
+		<result column="tree_leaf" property="treeLeaf" jdbcType="CHAR" />
+		<result column="tree_level" property="treeLevel" jdbcType="DECIMAL" />
+		<result column="tree_names" property="treeNames" jdbcType="VARCHAR" />
+		<result column="dict_label" property="dictLabel" jdbcType="VARCHAR" />
+		<result column="dict_value" property="dictValue" jdbcType="VARCHAR" />
+		<result column="dict_type" property="dictType" jdbcType="VARCHAR" />
+		<result column="is_sys" property="isSys" jdbcType="CHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="css_style" property="cssStyle" jdbcType="VARCHAR" />
+		<result column="css_class" property="cssClass" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="CHAR" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="corp_code" property="corpCode" jdbcType="VARCHAR" />
+		<result column="corp_name" property="corpName" jdbcType="VARCHAR" />
+		<result column="extend_s1" property="extendS1" jdbcType="VARCHAR" />
+		<result column="extend_s2" property="extendS2" jdbcType="VARCHAR" />
+		<result column="extend_s3" property="extendS3" jdbcType="VARCHAR" />
+		<result column="extend_s4" property="extendS4" jdbcType="VARCHAR" />
+		<result column="extend_s5" property="extendS5" jdbcType="VARCHAR" />
+		<result column="extend_s6" property="extendS6" jdbcType="VARCHAR" />
+		<result column="extend_s7" property="extendS7" jdbcType="VARCHAR" />
+		<result column="extend_s8" property="extendS8" jdbcType="VARCHAR" />
+		<result column="extend_i1" property="extendI1" jdbcType="DECIMAL" />
+		<result column="extend_i2" property="extendI2" jdbcType="DECIMAL" />
+		<result column="extend_i3" property="extendI3" jdbcType="DECIMAL" />
+		<result column="extend_i4" property="extendI4" jdbcType="DECIMAL" />
+		<result column="extend_f1" property="extendF1" jdbcType="DECIMAL" />
+		<result column="extend_f2" property="extendF2" jdbcType="DECIMAL" />
+		<result column="extend_f3" property="extendF3" jdbcType="DECIMAL" />
+		<result column="extend_f4" property="extendF4" jdbcType="DECIMAL" />
+		<result column="extend_d1" property="extendD1" jdbcType="TIMESTAMP" />
+		<result column="extend_d2" property="extendD2" jdbcType="TIMESTAMP" />
+		<result column="extend_d3" property="extendD3" jdbcType="TIMESTAMP" />
+		<result column="extend_d4" property="extendD4" jdbcType="TIMESTAMP" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	dict_code, parent_code, parent_codes, tree_sort, tree_sorts, tree_leaf, tree_level, tree_names, dict_label, dict_value, dict_type, is_sys, description, css_style, css_class, status, create_by, create_date, update_by, update_date, remarks, corp_code, corp_name, extend_s1, extend_s2, extend_s3, extend_s4, extend_s5, extend_s6, extend_s7, extend_s8, extend_i1, extend_i2, extend_i3, extend_i4, extend_f1, extend_f2, extend_f3, extend_f4, extend_d1, extend_d2, extend_d3, extend_d4
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.dictCode != null and '' != params.dictCode" >
+        		and dict_code = #{params.dictCode,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.parentCode != null and '' != params.parentCode" >
+        		and parent_code = #{params.parentCode,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.parentCodes != null and '' != params.parentCodes" >
+        		and parent_codes = #{params.parentCodes,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.treeSort != null" >
+        		and tree_sort = #{params.treeSort,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.treeSorts != null and '' != params.treeSorts" >
+        		and tree_sorts = #{params.treeSorts,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.treeLeaf != null and '' != params.treeLeaf" >
+        		and tree_leaf = #{params.treeLeaf,jdbcType=CHAR}
+      		</if>
+      		<if test="params.treeLevel != null" >
+        		and tree_level = #{params.treeLevel,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.treeNames != null and '' != params.treeNames" >
+        		and tree_names = #{params.treeNames,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.dictLabel != null and '' != params.dictLabel" >
+        		and dict_label = #{params.dictLabel,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.dictValue != null and '' != params.dictValue" >
+        		and dict_value = #{params.dictValue,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.dictType != null and '' != params.dictType" >
+        		and dict_type = #{params.dictType,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.isSys != null and '' != params.isSys" >
+        		and is_sys = #{params.isSys,jdbcType=CHAR}
+      		</if>
+      		<if test="params.description != null and '' != params.description" >
+        		and description = #{params.description,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.cssStyle != null and '' != params.cssStyle" >
+        		and css_style = #{params.cssStyle,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.cssClass != null and '' != params.cssClass" >
+        		and css_class = #{params.cssClass,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.status != null and '' != params.status" >
+        		and status = #{params.status,jdbcType=CHAR}
+      		</if>
+      		<if test="params.createBy != null and '' != params.createBy" >
+        		and create_by = #{params.createBy,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.createDate != null" >
+        		and create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.updateBy != null and '' != params.updateBy" >
+        		and update_by = #{params.updateBy,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.updateDate != null" >
+        		and update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.remarks != null and '' != params.remarks" >
+        		and remarks = #{params.remarks,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.corpCode != null and '' != params.corpCode" >
+        		and corp_code = #{params.corpCode,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.corpName != null and '' != params.corpName" >
+        		and corp_name = #{params.corpName,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.extendS1 != null and '' != params.extendS1" >
+        		and extend_s1 = #{params.extendS1,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.extendS2 != null and '' != params.extendS2" >
+        		and extend_s2 = #{params.extendS2,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.extendS3 != null and '' != params.extendS3" >
+        		and extend_s3 = #{params.extendS3,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.extendS4 != null and '' != params.extendS4" >
+        		and extend_s4 = #{params.extendS4,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.extendS5 != null and '' != params.extendS5" >
+        		and extend_s5 = #{params.extendS5,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.extendS6 != null and '' != params.extendS6" >
+        		and extend_s6 = #{params.extendS6,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.extendS7 != null and '' != params.extendS7" >
+        		and extend_s7 = #{params.extendS7,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.extendS8 != null and '' != params.extendS8" >
+        		and extend_s8 = #{params.extendS8,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.extendI1 != null" >
+        		and extend_i1 = #{params.extendI1,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.extendI2 != null" >
+        		and extend_i2 = #{params.extendI2,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.extendI3 != null" >
+        		and extend_i3 = #{params.extendI3,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.extendI4 != null" >
+        		and extend_i4 = #{params.extendI4,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.extendF1 != null" >
+        		and extend_f1 = #{params.extendF1,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.extendF2 != null" >
+        		and extend_f2 = #{params.extendF2,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.extendF3 != null" >
+        		and extend_f3 = #{params.extendF3,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.extendF4 != null" >
+        		and extend_f4 = #{params.extendF4,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.extendD1 != null" >
+        		and extend_d1 = #{params.extendD1,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.extendD2 != null" >
+        		and extend_d2 = #{params.extendD2,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.extendD3 != null" >
+        		and extend_d3 = #{params.extendD3,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.extendD4 != null" >
+        		and extend_d4 = #{params.extendD4,jdbcType=TIMESTAMP}
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" >
+		select 
+		<include refid="Base_Column_List" />
+		from js_sys_dict_data 
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from js_sys_dict_data
+		<where>
+			<include refid="com.towcent.base.dal.db.JsSysDictDataChildMapper.condition" />
+		</where>
+	</select>
+	<select id="selectOne" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from js_sys_dict_data
+		<where>
+			<include refid="com.towcent.base.dal.db.JsSysDictDataChildMapper.condition" />
+		</where>
+		limit 0,1
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from js_sys_dict_data  
+		<where>
+	  		<include refid="com.towcent.base.dal.db.JsSysDictDataChildMapper.condition" />
+	  	</where>
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="com.towcent.base.common.page.SimplePage" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from js_sys_dict_data 
+	  	<where>
+	  	<include refid="com.towcent.base.dal.db.JsSysDictDataChildMapper.condition" />
+	  	</where>
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{startRowNum} ,#{pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from js_sys_dict_data
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.base.common.model.JsSysDictData" useGeneratedKeys="true" keyProperty="id">
+    	insert into js_sys_dict_data (
+					dict_code,
+			parent_code,
+			parent_codes,
+			tree_sort,
+			tree_sorts,
+			tree_leaf,
+			tree_level,
+			tree_names,
+			dict_label,
+			dict_value,
+			dict_type,
+			is_sys,
+			description,
+			css_style,
+			css_class,
+			status,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			corp_code,
+			corp_name,
+			extend_s1,
+			extend_s2,
+			extend_s3,
+			extend_s4,
+			extend_s5,
+			extend_s6,
+			extend_s7,
+			extend_s8,
+			extend_i1,
+			extend_i2,
+			extend_i3,
+			extend_i4,
+			extend_f1,
+			extend_f2,
+			extend_f3,
+			extend_f4,
+			extend_d1,
+			extend_d2,
+			extend_d3,
+			extend_d4
+    	)
+    	values (
+					#{dictCode,jdbcType=VARCHAR},
+			#{parentCode,jdbcType=VARCHAR},
+			#{parentCodes,jdbcType=VARCHAR},
+			#{treeSort,jdbcType=DECIMAL},
+			#{treeSorts,jdbcType=VARCHAR},
+			#{treeLeaf,jdbcType=CHAR},
+			#{treeLevel,jdbcType=DECIMAL},
+			#{treeNames,jdbcType=VARCHAR},
+			#{dictLabel,jdbcType=VARCHAR},
+			#{dictValue,jdbcType=VARCHAR},
+			#{dictType,jdbcType=VARCHAR},
+			#{isSys,jdbcType=CHAR},
+			#{description,jdbcType=VARCHAR},
+			#{cssStyle,jdbcType=VARCHAR},
+			#{cssClass,jdbcType=VARCHAR},
+			#{status,jdbcType=CHAR},
+			#{createBy,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{updateBy,jdbcType=VARCHAR},
+			#{updateDate,jdbcType=TIMESTAMP},
+			#{remarks,jdbcType=VARCHAR},
+			#{corpCode,jdbcType=VARCHAR},
+			#{corpName,jdbcType=VARCHAR},
+			#{extendS1,jdbcType=VARCHAR},
+			#{extendS2,jdbcType=VARCHAR},
+			#{extendS3,jdbcType=VARCHAR},
+			#{extendS4,jdbcType=VARCHAR},
+			#{extendS5,jdbcType=VARCHAR},
+			#{extendS6,jdbcType=VARCHAR},
+			#{extendS7,jdbcType=VARCHAR},
+			#{extendS8,jdbcType=VARCHAR},
+			#{extendI1,jdbcType=DECIMAL},
+			#{extendI2,jdbcType=DECIMAL},
+			#{extendI3,jdbcType=DECIMAL},
+			#{extendI4,jdbcType=DECIMAL},
+			#{extendF1,jdbcType=DECIMAL},
+			#{extendF2,jdbcType=DECIMAL},
+			#{extendF3,jdbcType=DECIMAL},
+			#{extendF4,jdbcType=DECIMAL},
+			#{extendD1,jdbcType=TIMESTAMP},
+			#{extendD2,jdbcType=TIMESTAMP},
+			#{extendD3,jdbcType=TIMESTAMP},
+			#{extendD4,jdbcType=TIMESTAMP}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.base.common.model.JsSysDictData" useGeneratedKeys="true" keyProperty="id" >
+    	insert into js_sys_dict_data 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="dictCode != null and '' != dictCode" >
+      			dict_code,
+      		</if>
+      		<if test="parentCode != null and '' != parentCode" >
+      			parent_code,
+      		</if>
+      		<if test="parentCodes != null and '' != parentCodes" >
+      			parent_codes,
+      		</if>
+      		<if test="treeSort != null" >
+      			tree_sort,
+      		</if>
+      		<if test="treeSorts != null and '' != treeSorts" >
+      			tree_sorts,
+      		</if>
+      		<if test="treeLeaf != null and '' != treeLeaf" >
+      			tree_leaf,
+      		</if>
+      		<if test="treeLevel != null" >
+      			tree_level,
+      		</if>
+      		<if test="treeNames != null and '' != treeNames" >
+      			tree_names,
+      		</if>
+      		<if test="dictLabel != null and '' != dictLabel" >
+      			dict_label,
+      		</if>
+      		<if test="dictValue != null and '' != dictValue" >
+      			dict_value,
+      		</if>
+      		<if test="dictType != null and '' != dictType" >
+      			dict_type,
+      		</if>
+      		<if test="isSys != null and '' != isSys" >
+      			is_sys,
+      		</if>
+      		<if test="description != null and '' != description" >
+      			description,
+      		</if>
+      		<if test="cssStyle != null and '' != cssStyle" >
+      			css_style,
+      		</if>
+      		<if test="cssClass != null and '' != cssClass" >
+      			css_class,
+      		</if>
+      		<if test="status != null and '' != status" >
+      			status,
+      		</if>
+      		<if test="createBy != null and '' != createBy" >
+      			create_by,
+      		</if>
+      		<if test="createDate != null" >
+      			create_date,
+      		</if>
+      		<if test="updateBy != null and '' != updateBy" >
+      			update_by,
+      		</if>
+      		<if test="updateDate != null" >
+      			update_date,
+      		</if>
+      		<if test="remarks != null and '' != remarks" >
+      			remarks,
+      		</if>
+      		<if test="corpCode != null and '' != corpCode" >
+      			corp_code,
+      		</if>
+      		<if test="corpName != null and '' != corpName" >
+      			corp_name,
+      		</if>
+      		<if test="extendS1 != null and '' != extendS1" >
+      			extend_s1,
+      		</if>
+      		<if test="extendS2 != null and '' != extendS2" >
+      			extend_s2,
+      		</if>
+      		<if test="extendS3 != null and '' != extendS3" >
+      			extend_s3,
+      		</if>
+      		<if test="extendS4 != null and '' != extendS4" >
+      			extend_s4,
+      		</if>
+      		<if test="extendS5 != null and '' != extendS5" >
+      			extend_s5,
+      		</if>
+      		<if test="extendS6 != null and '' != extendS6" >
+      			extend_s6,
+      		</if>
+      		<if test="extendS7 != null and '' != extendS7" >
+      			extend_s7,
+      		</if>
+      		<if test="extendS8 != null and '' != extendS8" >
+      			extend_s8,
+      		</if>
+      		<if test="extendI1 != null" >
+      			extend_i1,
+      		</if>
+      		<if test="extendI2 != null" >
+      			extend_i2,
+      		</if>
+      		<if test="extendI3 != null" >
+      			extend_i3,
+      		</if>
+      		<if test="extendI4 != null" >
+      			extend_i4,
+      		</if>
+      		<if test="extendF1 != null" >
+      			extend_f1,
+      		</if>
+      		<if test="extendF2 != null" >
+      			extend_f2,
+      		</if>
+      		<if test="extendF3 != null" >
+      			extend_f3,
+      		</if>
+      		<if test="extendF4 != null" >
+      			extend_f4,
+      		</if>
+      		<if test="extendD1 != null" >
+      			extend_d1,
+      		</if>
+      		<if test="extendD2 != null" >
+      			extend_d2,
+      		</if>
+      		<if test="extendD3 != null" >
+      			extend_d3,
+      		</if>
+      		<if test="extendD4 != null" >
+      			extend_d4,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="dictCode != null and '' != dictCode" >
+	  			#{dictCode,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="parentCode != null and '' != parentCode" >
+	  			#{parentCode,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="parentCodes != null and '' != parentCodes" >
+	  			#{parentCodes,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="treeSort != null" >
+	  			#{treeSort,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="treeSorts != null and '' != treeSorts" >
+	  			#{treeSorts,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="treeLeaf != null and '' != treeLeaf" >
+	  			#{treeLeaf,jdbcType=CHAR},
+	  		</if>
+      		<if test="treeLevel != null" >
+	  			#{treeLevel,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="treeNames != null and '' != treeNames" >
+	  			#{treeNames,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="dictLabel != null and '' != dictLabel" >
+	  			#{dictLabel,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="dictValue != null and '' != dictValue" >
+	  			#{dictValue,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="dictType != null and '' != dictType" >
+	  			#{dictType,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="isSys != null and '' != isSys" >
+	  			#{isSys,jdbcType=CHAR},
+	  		</if>
+      		<if test="description != null and '' != description" >
+	  			#{description,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="cssStyle != null and '' != cssStyle" >
+	  			#{cssStyle,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="cssClass != null and '' != cssClass" >
+	  			#{cssClass,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="status != null and '' != status" >
+	  			#{status,jdbcType=CHAR},
+	  		</if>
+      		<if test="createBy != null and '' != createBy" >
+	  			#{createBy,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="createDate != null" >
+	  			#{createDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="updateBy != null and '' != updateBy" >
+	  			#{updateBy,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="updateDate != null" >
+	  			#{updateDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="remarks != null and '' != remarks" >
+	  			#{remarks,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="corpCode != null and '' != corpCode" >
+	  			#{corpCode,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="corpName != null and '' != corpName" >
+	  			#{corpName,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="extendS1 != null and '' != extendS1" >
+	  			#{extendS1,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="extendS2 != null and '' != extendS2" >
+	  			#{extendS2,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="extendS3 != null and '' != extendS3" >
+	  			#{extendS3,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="extendS4 != null and '' != extendS4" >
+	  			#{extendS4,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="extendS5 != null and '' != extendS5" >
+	  			#{extendS5,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="extendS6 != null and '' != extendS6" >
+	  			#{extendS6,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="extendS7 != null and '' != extendS7" >
+	  			#{extendS7,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="extendS8 != null and '' != extendS8" >
+	  			#{extendS8,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="extendI1 != null" >
+	  			#{extendI1,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="extendI2 != null" >
+	  			#{extendI2,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="extendI3 != null" >
+	  			#{extendI3,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="extendI4 != null" >
+	  			#{extendI4,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="extendF1 != null" >
+	  			#{extendF1,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="extendF2 != null" >
+	  			#{extendF2,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="extendF3 != null" >
+	  			#{extendF3,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="extendF4 != null" >
+	  			#{extendF4,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="extendD1 != null" >
+	  			#{extendD1,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="extendD2 != null" >
+	  			#{extendD2,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="extendD3 != null" >
+	  			#{extendD3,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="extendD4 != null" >
+	  			#{extendD4,jdbcType=TIMESTAMP},
+	  		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.common.model.JsSysDictData" >
+    	update js_sys_dict_data 
+	    <set>
+	      	<if test="dictCode != null and '' != dictCode" >
+	        	dict_code = #{dictCode,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="parentCode != null and '' != parentCode" >
+	        	parent_code = #{parentCode,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="parentCodes != null and '' != parentCodes" >
+	        	parent_codes = #{parentCodes,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="treeSort != null" >
+	        	tree_sort = #{treeSort,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="treeSorts != null and '' != treeSorts" >
+	        	tree_sorts = #{treeSorts,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="treeLeaf != null and '' != treeLeaf" >
+	        	tree_leaf = #{treeLeaf,jdbcType=CHAR},
+	      	</if>
+	      	<if test="treeLevel != null" >
+	        	tree_level = #{treeLevel,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="treeNames != null and '' != treeNames" >
+	        	tree_names = #{treeNames,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="dictLabel != null and '' != dictLabel" >
+	        	dict_label = #{dictLabel,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="dictValue != null and '' != dictValue" >
+	        	dict_value = #{dictValue,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="dictType != null and '' != dictType" >
+	        	dict_type = #{dictType,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="isSys != null and '' != isSys" >
+	        	is_sys = #{isSys,jdbcType=CHAR},
+	      	</if>
+	      	<if test="description != null and '' != description" >
+	        	description = #{description,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="cssStyle != null and '' != cssStyle" >
+	        	css_style = #{cssStyle,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="cssClass != null and '' != cssClass" >
+	        	css_class = #{cssClass,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="status != null and '' != status" >
+	        	status = #{status,jdbcType=CHAR},
+	      	</if>
+	      	<if test="createBy != null and '' != createBy" >
+	        	create_by = #{createBy,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="createDate != null" >
+	        	create_date = #{createDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="updateBy != null and '' != updateBy" >
+	        	update_by = #{updateBy,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="updateDate != null" >
+	        	update_date = #{updateDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="remarks != null and '' != remarks" >
+	        	remarks = #{remarks,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="corpCode != null and '' != corpCode" >
+	        	corp_code = #{corpCode,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="corpName != null and '' != corpName" >
+	        	corp_name = #{corpName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="extendS1 != null and '' != extendS1" >
+	        	extend_s1 = #{extendS1,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="extendS2 != null and '' != extendS2" >
+	        	extend_s2 = #{extendS2,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="extendS3 != null and '' != extendS3" >
+	        	extend_s3 = #{extendS3,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="extendS4 != null and '' != extendS4" >
+	        	extend_s4 = #{extendS4,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="extendS5 != null and '' != extendS5" >
+	        	extend_s5 = #{extendS5,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="extendS6 != null and '' != extendS6" >
+	        	extend_s6 = #{extendS6,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="extendS7 != null and '' != extendS7" >
+	        	extend_s7 = #{extendS7,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="extendS8 != null and '' != extendS8" >
+	        	extend_s8 = #{extendS8,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="extendI1 != null" >
+	        	extend_i1 = #{extendI1,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="extendI2 != null" >
+	        	extend_i2 = #{extendI2,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="extendI3 != null" >
+	        	extend_i3 = #{extendI3,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="extendI4 != null" >
+	        	extend_i4 = #{extendI4,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="extendF1 != null" >
+	        	extend_f1 = #{extendF1,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="extendF2 != null" >
+	        	extend_f2 = #{extendF2,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="extendF3 != null" >
+	        	extend_f3 = #{extendF3,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="extendF4 != null" >
+	        	extend_f4 = #{extendF4,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="extendD1 != null" >
+	        	extend_d1 = #{extendD1,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="extendD2 != null" >
+	        	extend_d2 = #{extendD2,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="extendD3 != null" >
+	        	extend_d3 = #{extendD3,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="extendD4 != null" >
+	        	extend_d4 = #{extendD4,jdbcType=TIMESTAMP},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.base.common.model.JsSysDictData" >
+    	update js_sys_dict_data 
+    	set 
+      	      		dict_code = #{dictCode,jdbcType=VARCHAR},
+      		parent_code = #{parentCode,jdbcType=VARCHAR},
+      		parent_codes = #{parentCodes,jdbcType=VARCHAR},
+      		tree_sort = #{treeSort,jdbcType=DECIMAL},
+      		tree_sorts = #{treeSorts,jdbcType=VARCHAR},
+      		tree_leaf = #{treeLeaf,jdbcType=CHAR},
+      		tree_level = #{treeLevel,jdbcType=DECIMAL},
+      		tree_names = #{treeNames,jdbcType=VARCHAR},
+      		dict_label = #{dictLabel,jdbcType=VARCHAR},
+      		dict_value = #{dictValue,jdbcType=VARCHAR},
+      		dict_type = #{dictType,jdbcType=VARCHAR},
+      		is_sys = #{isSys,jdbcType=CHAR},
+      		description = #{description,jdbcType=VARCHAR},
+      		css_style = #{cssStyle,jdbcType=VARCHAR},
+      		css_class = #{cssClass,jdbcType=VARCHAR},
+      		status = #{status,jdbcType=CHAR},
+      		create_by = #{createBy,jdbcType=VARCHAR},
+      		create_date = #{createDate,jdbcType=TIMESTAMP},
+      		update_by = #{updateBy,jdbcType=VARCHAR},
+      		update_date = #{updateDate,jdbcType=TIMESTAMP},
+      		remarks = #{remarks,jdbcType=VARCHAR},
+      		corp_code = #{corpCode,jdbcType=VARCHAR},
+      		corp_name = #{corpName,jdbcType=VARCHAR},
+      		extend_s1 = #{extendS1,jdbcType=VARCHAR},
+      		extend_s2 = #{extendS2,jdbcType=VARCHAR},
+      		extend_s3 = #{extendS3,jdbcType=VARCHAR},
+      		extend_s4 = #{extendS4,jdbcType=VARCHAR},
+      		extend_s5 = #{extendS5,jdbcType=VARCHAR},
+      		extend_s6 = #{extendS6,jdbcType=VARCHAR},
+      		extend_s7 = #{extendS7,jdbcType=VARCHAR},
+      		extend_s8 = #{extendS8,jdbcType=VARCHAR},
+      		extend_i1 = #{extendI1,jdbcType=DECIMAL},
+      		extend_i2 = #{extendI2,jdbcType=DECIMAL},
+      		extend_i3 = #{extendI3,jdbcType=DECIMAL},
+      		extend_i4 = #{extendI4,jdbcType=DECIMAL},
+      		extend_f1 = #{extendF1,jdbcType=DECIMAL},
+      		extend_f2 = #{extendF2,jdbcType=DECIMAL},
+      		extend_f3 = #{extendF3,jdbcType=DECIMAL},
+      		extend_f4 = #{extendF4,jdbcType=DECIMAL},
+      		extend_d1 = #{extendD1,jdbcType=TIMESTAMP},
+      		extend_d2 = #{extendD2,jdbcType=TIMESTAMP},
+      		extend_d3 = #{extendD3,jdbcType=TIMESTAMP},
+      		extend_d4 = #{extendD4,jdbcType=TIMESTAMP} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

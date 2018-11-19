@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.base.dal.db.JsSysAreaMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.base.common.model.JsSysArea" >
+		<id column="area_code" property="areaCode" jdbcType="VARCHAR" />
+		<result column="parent_code" property="parentCode" jdbcType="VARCHAR" />
+		<result column="parent_codes" property="parentCodes" jdbcType="VARCHAR" />
+		<result column="tree_sort" property="treeSort" jdbcType="DECIMAL" />
+		<result column="tree_sorts" property="treeSorts" jdbcType="VARCHAR" />
+		<result column="tree_leaf" property="treeLeaf" jdbcType="CHAR" />
+		<result column="tree_level" property="treeLevel" jdbcType="DECIMAL" />
+		<result column="tree_names" property="treeNames" jdbcType="VARCHAR" />
+		<result column="area_name" property="areaName" jdbcType="VARCHAR" />
+		<result column="area_type" property="areaType" jdbcType="CHAR" />
+		<result column="status" property="status" jdbcType="CHAR" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	area_code, parent_code, parent_codes, tree_sort, tree_sorts, tree_leaf, tree_level, tree_names, area_name, area_type, status, create_by, create_date, update_by, update_date, remarks
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.areaCode != null and '' != params.areaCode" >
+        		and area_code = #{params.areaCode,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.parentCode != null and '' != params.parentCode" >
+        		and parent_code = #{params.parentCode,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.parentCodes != null and '' != params.parentCodes" >
+        		and parent_codes = #{params.parentCodes,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.treeSort != null" >
+        		and tree_sort = #{params.treeSort,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.treeSorts != null and '' != params.treeSorts" >
+        		and tree_sorts = #{params.treeSorts,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.treeLeaf != null and '' != params.treeLeaf" >
+        		and tree_leaf = #{params.treeLeaf,jdbcType=CHAR}
+      		</if>
+      		<if test="params.treeLevel != null" >
+        		and tree_level = #{params.treeLevel,jdbcType=DECIMAL}
+      		</if>
+      		<if test="params.treeNames != null and '' != params.treeNames" >
+        		and tree_names = #{params.treeNames,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.areaName != null and '' != params.areaName" >
+        		and area_name = #{params.areaName,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.areaType != null and '' != params.areaType" >
+        		and area_type = #{params.areaType,jdbcType=CHAR}
+      		</if>
+      		<if test="params.status != null and '' != params.status" >
+        		and status = #{params.status,jdbcType=CHAR}
+      		</if>
+      		<if test="params.createBy != null and '' != params.createBy" >
+        		and create_by = #{params.createBy,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.createDate != null" >
+        		and create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.updateBy != null and '' != params.updateBy" >
+        		and update_by = #{params.updateBy,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.updateDate != null" >
+        		and update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.remarks != null and '' != params.remarks" >
+        		and remarks = #{params.remarks,jdbcType=VARCHAR}
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" >
+		select 
+		<include refid="Base_Column_List" />
+		from js_sys_area 
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from js_sys_area
+		<where>
+			<include refid="com.towcent.base.dal.db.JsSysAreaChildMapper.condition" />
+		</where>
+	</select>
+	<select id="selectOne" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from js_sys_area
+		<where>
+			<include refid="com.towcent.base.dal.db.JsSysAreaChildMapper.condition" />
+		</where>
+		limit 0,1
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from js_sys_area  
+		<where>
+	  		<include refid="com.towcent.base.dal.db.JsSysAreaChildMapper.condition" />
+	  	</where>
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="com.towcent.base.common.page.SimplePage" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from js_sys_area 
+	  	<where>
+	  	<include refid="com.towcent.base.dal.db.JsSysAreaChildMapper.condition" />
+	  	</where>
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{startRowNum} ,#{pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from js_sys_area
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.base.common.model.JsSysArea" useGeneratedKeys="true" keyProperty="id">
+    	insert into js_sys_area (
+					area_code,
+			parent_code,
+			parent_codes,
+			tree_sort,
+			tree_sorts,
+			tree_leaf,
+			tree_level,
+			tree_names,
+			area_name,
+			area_type,
+			status,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks
+    	)
+    	values (
+					#{areaCode,jdbcType=VARCHAR},
+			#{parentCode,jdbcType=VARCHAR},
+			#{parentCodes,jdbcType=VARCHAR},
+			#{treeSort,jdbcType=DECIMAL},
+			#{treeSorts,jdbcType=VARCHAR},
+			#{treeLeaf,jdbcType=CHAR},
+			#{treeLevel,jdbcType=DECIMAL},
+			#{treeNames,jdbcType=VARCHAR},
+			#{areaName,jdbcType=VARCHAR},
+			#{areaType,jdbcType=CHAR},
+			#{status,jdbcType=CHAR},
+			#{createBy,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{updateBy,jdbcType=VARCHAR},
+			#{updateDate,jdbcType=TIMESTAMP},
+			#{remarks,jdbcType=VARCHAR}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.base.common.model.JsSysArea" useGeneratedKeys="true" keyProperty="id" >
+    	insert into js_sys_area 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="areaCode != null and '' != areaCode" >
+      			area_code,
+      		</if>
+      		<if test="parentCode != null and '' != parentCode" >
+      			parent_code,
+      		</if>
+      		<if test="parentCodes != null and '' != parentCodes" >
+      			parent_codes,
+      		</if>
+      		<if test="treeSort != null" >
+      			tree_sort,
+      		</if>
+      		<if test="treeSorts != null and '' != treeSorts" >
+      			tree_sorts,
+      		</if>
+      		<if test="treeLeaf != null and '' != treeLeaf" >
+      			tree_leaf,
+      		</if>
+      		<if test="treeLevel != null" >
+      			tree_level,
+      		</if>
+      		<if test="treeNames != null and '' != treeNames" >
+      			tree_names,
+      		</if>
+      		<if test="areaName != null and '' != areaName" >
+      			area_name,
+      		</if>
+      		<if test="areaType != null and '' != areaType" >
+      			area_type,
+      		</if>
+      		<if test="status != null and '' != status" >
+      			status,
+      		</if>
+      		<if test="createBy != null and '' != createBy" >
+      			create_by,
+      		</if>
+      		<if test="createDate != null" >
+      			create_date,
+      		</if>
+      		<if test="updateBy != null and '' != updateBy" >
+      			update_by,
+      		</if>
+      		<if test="updateDate != null" >
+      			update_date,
+      		</if>
+      		<if test="remarks != null and '' != remarks" >
+      			remarks,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="areaCode != null and '' != areaCode" >
+	  			#{areaCode,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="parentCode != null and '' != parentCode" >
+	  			#{parentCode,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="parentCodes != null and '' != parentCodes" >
+	  			#{parentCodes,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="treeSort != null" >
+	  			#{treeSort,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="treeSorts != null and '' != treeSorts" >
+	  			#{treeSorts,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="treeLeaf != null and '' != treeLeaf" >
+	  			#{treeLeaf,jdbcType=CHAR},
+	  		</if>
+      		<if test="treeLevel != null" >
+	  			#{treeLevel,jdbcType=DECIMAL},
+	  		</if>
+      		<if test="treeNames != null and '' != treeNames" >
+	  			#{treeNames,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="areaName != null and '' != areaName" >
+	  			#{areaName,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="areaType != null and '' != areaType" >
+	  			#{areaType,jdbcType=CHAR},
+	  		</if>
+      		<if test="status != null and '' != status" >
+	  			#{status,jdbcType=CHAR},
+	  		</if>
+      		<if test="createBy != null and '' != createBy" >
+	  			#{createBy,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="createDate != null" >
+	  			#{createDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="updateBy != null and '' != updateBy" >
+	  			#{updateBy,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="updateDate != null" >
+	  			#{updateDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="remarks != null and '' != remarks" >
+	  			#{remarks,jdbcType=VARCHAR},
+	  		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.common.model.JsSysArea" >
+    	update js_sys_area 
+	    <set>
+	      	<if test="areaCode != null and '' != areaCode" >
+	        	area_code = #{areaCode,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="parentCode != null and '' != parentCode" >
+	        	parent_code = #{parentCode,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="parentCodes != null and '' != parentCodes" >
+	        	parent_codes = #{parentCodes,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="treeSort != null" >
+	        	tree_sort = #{treeSort,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="treeSorts != null and '' != treeSorts" >
+	        	tree_sorts = #{treeSorts,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="treeLeaf != null and '' != treeLeaf" >
+	        	tree_leaf = #{treeLeaf,jdbcType=CHAR},
+	      	</if>
+	      	<if test="treeLevel != null" >
+	        	tree_level = #{treeLevel,jdbcType=DECIMAL},
+	      	</if>
+	      	<if test="treeNames != null and '' != treeNames" >
+	        	tree_names = #{treeNames,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="areaName != null and '' != areaName" >
+	        	area_name = #{areaName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="areaType != null and '' != areaType" >
+	        	area_type = #{areaType,jdbcType=CHAR},
+	      	</if>
+	      	<if test="status != null and '' != status" >
+	        	status = #{status,jdbcType=CHAR},
+	      	</if>
+	      	<if test="createBy != null and '' != createBy" >
+	        	create_by = #{createBy,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="createDate != null" >
+	        	create_date = #{createDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="updateBy != null and '' != updateBy" >
+	        	update_by = #{updateBy,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="updateDate != null" >
+	        	update_date = #{updateDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="remarks != null and '' != remarks" >
+	        	remarks = #{remarks,jdbcType=VARCHAR},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.base.common.model.JsSysArea" >
+    	update js_sys_area 
+    	set 
+      	      		area_code = #{areaCode,jdbcType=VARCHAR},
+      		parent_code = #{parentCode,jdbcType=VARCHAR},
+      		parent_codes = #{parentCodes,jdbcType=VARCHAR},
+      		tree_sort = #{treeSort,jdbcType=DECIMAL},
+      		tree_sorts = #{treeSorts,jdbcType=VARCHAR},
+      		tree_leaf = #{treeLeaf,jdbcType=CHAR},
+      		tree_level = #{treeLevel,jdbcType=DECIMAL},
+      		tree_names = #{treeNames,jdbcType=VARCHAR},
+      		area_name = #{areaName,jdbcType=VARCHAR},
+      		area_type = #{areaType,jdbcType=CHAR},
+      		status = #{status,jdbcType=CHAR},
+      		create_by = #{createBy,jdbcType=VARCHAR},
+      		create_date = #{createDate,jdbcType=TIMESTAMP},
+      		update_by = #{updateBy,jdbcType=VARCHAR},
+      		update_date = #{updateDate,jdbcType=TIMESTAMP},
+      		remarks = #{remarks,jdbcType=VARCHAR} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

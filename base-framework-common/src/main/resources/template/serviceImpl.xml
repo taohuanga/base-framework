@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>service</name>
+	<filePath>src/main/java/${packageName}/${moduleName}/biz/impl</filePath>
+	<fileName>${ClassName}ServiceImpl.java</fileName>
+	<content><![CDATA[
+
+import ${packageName}.${moduleName}.vo.input.${ClassName}${FunctionName}In;
+import ${packageName}.${moduleName}.vo.output.${ClassName}${FunctionName}Out;
+	||
+	
+	@Override
+	public ResultVo ${functionName}(${ClassName}${FunctionName}In paramIn) {
+		ResultVo resultVo = new ResultVo();
+		if (!validationObj(paramIn, resultVo)) {
+			return resultVo;
+		}
+//		   try { 
+			<#if outParamType?? && outParamType == 'object'>
+				${ClassName}${FunctionName}Out outParam = new ${ClassName}${FunctionName}Out();
+				//TODO
+				resultVo.setData(outParam);
+			</#if>
+			<#if outParamType?? && outParamType == 'List'>
+				List<${ClassName}${FunctionName}Out> outList = Lists.newArrayList();
+				//TODO
+				resultVo.setData(outList);
+			</#if>
+			<#if outParamType?? && outParamType == 'void'>
+				//TODO
+			</#if>
+			<#if outParamType?? && outParamType == 'page'>
+				SimplePageDto page = new SimplePageDto();
+				page.setPageNo(paramIn.getPageNo());
+				page.setPageSize(paramIn.getPageSize());
+				PaginationDto<${ClassName}${FunctionName}Out> outPage = null; //TODO api.xxList(params, page);
+				//TODO
+				resultVo.setData(outPage);
+			</#if>
+//		 } catch (RpcException e) {
+//			assemblyVo(resultVo, E_001, "失败");
+//			logger.error("", e);
+//		 } 
+		return resultVo;
+	}
+]]>
+	</content>
+</template>

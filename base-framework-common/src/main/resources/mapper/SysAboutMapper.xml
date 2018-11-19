@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.base.dal.db.SysAboutMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.base.common.model.SysAbout" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="app_type" property="appType" jdbcType="TINYINT" />
+		<result column="logo" property="logo" jdbcType="VARCHAR" />
+		<result column="app_name" property="appName" jdbcType="VARCHAR" />
+		<result column="about" property="about" jdbcType="VARCHAR" />
+		<result column="copyright" property="copyright" jdbcType="VARCHAR" />
+		<result column="service_agreement" property="serviceAgreement" jdbcType="VARCHAR" />
+		<result column="privacy_policy" property="privacyPolicy" jdbcType="VARCHAR" />
+		<result column="user_notes" property="userNotes" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />	
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	a.id, a.app_type, a.logo, a.app_name, a.about, a.copyright, a.service_agreement, a.privacy_policy, a.user_notes, a.create_by, a.create_date, a.update_by, a.update_date, a.merchant_id
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null" >
+        		and a.id = #{params.id,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.appType != null" >
+        		and a.app_type = #{params.appType,jdbcType=TINYINT}
+      		</if>
+      		<if test="params.logo != null and '' != params.logo" >
+        		and a.logo = #{params.logo,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.appName != null and '' != params.appName" >
+        		and a.app_name = #{params.appName,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.about != null and '' != params.about" >
+        		and a.about = #{params.about,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.copyright != null and '' != params.copyright" >
+        		and a.copyright = #{params.copyright,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.serviceAgreement != null and '' != params.serviceAgreement" >
+        		and a.service_agreement = #{params.serviceAgreement,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.privacyPolicy != null and '' != params.privacyPolicy" >
+        		and a.privacy_policy = #{params.privacyPolicy,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.userNotes != null and '' != params.userNotes" >
+        		and a.user_notes = #{params.userNotes,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.createBy != null" >
+        		and a.create_by = #{params.createBy,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.createDate != null" >
+        		and a.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.updateBy != null" >
+        		and a.update_by = #{params.updateBy,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.updateDate != null" >
+        		and a.update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test="params.merchantId != null" >
+	        	and a.merchant_id = #{params.merchantId,jdbcType=INTEGER}
+	      	</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from sys_about a
+		where a.id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from sys_about a 
+		where 1=1 
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from sys_about a where 1=1 
+	  	<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from sys_about a
+	  	where 1=1 
+	  	<include refid="condition" />
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from sys_about
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.base.common.model.SysAbout" >
+	  	delete from sys_about
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.base.common.model.SysAbout" useGeneratedKeys="true" keyProperty="id">
+    	insert into sys_about (
+					id,
+			app_type,
+			logo,
+			app_name,
+			about,
+			copyright,
+			service_agreement,
+			privacy_policy,
+			user_notes,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			merchant_id
+    	)
+    	values (
+					#{id,jdbcType=INTEGER},
+			#{appType,jdbcType=TINYINT},
+			#{logo,jdbcType=VARCHAR},
+			#{appName,jdbcType=VARCHAR},
+			#{about,jdbcType=VARCHAR},
+			#{copyright,jdbcType=VARCHAR},
+			#{serviceAgreement,jdbcType=VARCHAR},
+			#{privacyPolicy,jdbcType=VARCHAR},
+			#{userNotes,jdbcType=VARCHAR},
+			#{createBy,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{updateBy,jdbcType=VARCHAR},
+			#{updateDate,jdbcType=TIMESTAMP},#{merchantId,jdbcType=INTEGER}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.base.common.model.SysAbout" useGeneratedKeys="true" keyProperty="id" >
+    	insert into sys_about 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+      			id,
+      		</if>
+      		<if test="appType != null" >
+      			app_type,
+      		</if>
+      		<if test="logo != null and '' != logo" >
+      			logo,
+      		</if>
+      		<if test="appName != null and '' != appName" >
+      			app_name,
+      		</if>
+      		<if test="about != null and '' != about" >
+      			about,
+      		</if>
+      		<if test="copyright != null and '' != copyright" >
+      			copyright,
+      		</if>
+      		<if test="serviceAgreement != null and '' != serviceAgreement" >
+      			service_agreement,
+      		</if>
+      		<if test="privacyPolicy != null and '' != privacyPolicy" >
+      			privacy_policy,
+      		</if>
+      		<if test="userNotes != null and '' != userNotes" >
+      			user_notes,
+      		</if>
+      		<if test="createBy != null" >
+      			create_by,
+      		</if>
+      		<if test="createDate != null" >
+      			create_date,
+      		</if>
+      		<if test="updateBy != null" >
+      			update_by,
+      		</if>
+      		<if test="updateDate != null" >
+      			update_date,
+      		</if>
+      		<if test="merchantId != null" >
+      			merchant_id,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+	  			#{id,jdbcType=INTEGER},
+	  		</if>
+      		<if test="appType != null" >
+	  			#{appType,jdbcType=TINYINT},
+	  		</if>
+      		<if test="logo != null and '' != logo" >
+	  			#{logo,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="appName != null and '' != appName" >
+	  			#{appName,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="about != null and '' != about" >
+	  			#{about,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="copyright != null and '' != copyright" >
+	  			#{copyright,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="serviceAgreement != null and '' != serviceAgreement" >
+	  			#{serviceAgreement,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="privacyPolicy != null and '' != privacyPolicy" >
+	  			#{privacyPolicy,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="userNotes != null and '' != userNotes" >
+	  			#{userNotes,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="createBy != null" >
+	  			#{createBy,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="createDate != null" >
+	  			#{createDate,jdbcType=TIMESTAMP},
+	  		</if>
+      		<if test="updateBy != null" >
+	  			#{updateBy,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="updateDate != null" >
+	  			#{updateDate,jdbcType=TIMESTAMP},
+	  		</if>
+	  		<if test="merchantId != null" >
+      			#{merchantId,jdbcType=INTEGER},
+      		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.common.model.SysAbout" >
+    	update sys_about 
+	    <set >
+	      	<if test="id != null" >
+	        	id = #{id,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="appType != null" >
+	        	app_type = #{appType,jdbcType=TINYINT},
+	      	</if>
+	      	<if test="logo != null and '' != logo" >
+	        	logo = #{logo,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="appName != null and '' != appName" >
+	        	app_name = #{appName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="about != null and '' != about" >
+	        	about = #{about,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="copyright != null and '' != copyright" >
+	        	copyright = #{copyright,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="serviceAgreement != null and '' != serviceAgreement" >
+	        	service_agreement = #{serviceAgreement,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="privacyPolicy != null and '' != privacyPolicy" >
+	        	privacy_policy = #{privacyPolicy,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="userNotes != null and '' != userNotes" >
+	        	user_notes = #{userNotes,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="createBy != null" >
+	        	create_by = #{createBy,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="createDate != null" >
+	        	create_date = #{createDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="updateBy != null" >
+	        	update_by = #{updateBy,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="updateDate != null" >
+	        	update_date = #{updateDate,jdbcType=TIMESTAMP},
+	      	</if>
+	      	<if test="merchantId != null" >
+      			merchant_id = #{merchantId,jdbcType=INTEGER},
+      		</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.base.common.model.SysAbout" >
+    	update sys_about 
+    	set 
+			app_type = #{appType,jdbcType=TINYINT},
+			logo = #{logo,jdbcType=VARCHAR},
+			app_name = #{appName,jdbcType=VARCHAR},
+			about = #{about,jdbcType=VARCHAR},
+			copyright = #{copyright,jdbcType=VARCHAR},
+			service_agreement = #{serviceAgreement,jdbcType=VARCHAR},
+			privacy_policy = #{privacyPolicy,jdbcType=VARCHAR},
+			user_notes = #{userNotes,jdbcType=VARCHAR},
+			create_by = #{createBy,jdbcType=INTEGER},
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+			update_by = #{updateBy,jdbcType=VARCHAR},
+			update_date = #{updateDate,jdbcType=TIMESTAMP},
+			merchant_id = #{merchantId,jdbcType=INTEGER}
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>

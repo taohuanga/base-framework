@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/base-framework.iml" filepath="$PROJECT_DIR$/base-framework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-framework-common/base-framework-common.iml" filepath="$PROJECT_DIR$/base-framework-common/base-framework-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-framework-web/base-framework-web.iml" filepath="$PROJECT_DIR$/base-framework-web/base-framework-web.iml" />
+    </modules>
+  </component>
+</project>

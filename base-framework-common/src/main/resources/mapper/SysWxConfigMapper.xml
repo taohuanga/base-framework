@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.towcent.base.dal.db.SysWxConfigMapper" >
+  	<resultMap id="BaseResultMap" type="com.towcent.base.common.model.SysWxConfig" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="appid" property="appid" jdbcType="VARCHAR" />
+		<result column="wx_appsecret" property="wxAppsecret" jdbcType="VARCHAR" />
+		<result column="wx_token" property="wxToken" jdbcType="VARCHAR" />
+		<result column="wx_aeskey" property="wxAeskey" jdbcType="VARCHAR" />
+		<result column="wx_remark" property="wxRemark" jdbcType="VARCHAR" />
+		<result column="is_service" property="isService" jdbcType="CHAR" />
+		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+  	</resultMap>
+  	<sql id="Base_Column_List" >
+  	  	a.id, a.appid, a.wx_appsecret, a.wx_token, a.wx_aeskey, a.wx_remark, a.is_service, a.merchant_id
+  	</sql>
+	<sql id="condition" >
+    	<if test="null!=params" >
+      		<if test="params.id != null" >
+        		and a.id = #{params.id,jdbcType=INTEGER}
+      		</if>
+      		<if test="params.appid != null and '' != params.appid" >
+        		and a.appid = #{params.appid,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.wxAppsecret != null and '' != params.wxAppsecret" >
+        		and a.wx_appsecret = #{params.wxAppsecret,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.wxToken != null and '' != params.wxToken" >
+        		and a.wx_token = #{params.wxToken,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.wxAeskey != null and '' != params.wxAeskey" >
+        		and a.wx_aeskey = #{params.wxAeskey,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.wxRemark != null and '' != params.wxRemark" >
+        		and a.wx_remark = #{params.wxRemark,jdbcType=VARCHAR}
+      		</if>
+      		<if test="params.isService != null and '' != params.isService" >
+        		and a.is_service = #{params.isService,jdbcType=CHAR}
+      		</if>
+      		<if test="params.merchantId != null" >
+        		and a.merchant_id = #{params.merchantId,jdbcType=INTEGER}
+      		</if>
+      	</if>
+  	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from sys_wx_config a
+		where a.id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+		from sys_wx_config a 
+		where 1=1 
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer" >
+	  	select count(1) as s from sys_wx_config a where 1=1
+	  	<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	  	from sys_wx_config a
+	  	where 1=1
+	  	<include refid="condition" />
+	  	<if test="orderByField != null and ''!=orderByField" >
+	    	order by ${orderByField} 
+	    	<if test="orderByField" >
+	      	${orderBy}
+	    	</if>
+	  	</if>
+	  	limit #{page.startRowNum} ,#{page.pageSize}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  	delete from sys_wx_config
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.towcent.base.common.model.SysWxConfig" >
+	  	delete from sys_wx_config
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.towcent.base.common.model.SysWxConfig" useGeneratedKeys="true" keyProperty="id">
+    	insert into sys_wx_config (
+					id,
+			appid,
+			wx_appsecret,
+			wx_token,
+			wx_aeskey,
+			wx_remark,
+			is_service,
+			merchant_id
+    	)
+    	values (
+					#{id,jdbcType=INTEGER},
+			#{appid,jdbcType=VARCHAR},
+			#{wxAppsecret,jdbcType=VARCHAR},
+			#{wxToken,jdbcType=VARCHAR},
+			#{wxAeskey,jdbcType=VARCHAR},
+			#{wxRemark,jdbcType=VARCHAR},
+			#{isService,jdbcType=CHAR},
+			#{merchantId,jdbcType=INTEGER}
+		)
+  	</insert>
+	<insert id="insertSelective" parameterType="com.towcent.base.common.model.SysWxConfig" useGeneratedKeys="true" keyProperty="id" >
+    	insert into sys_wx_config 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+      			id,
+      		</if>
+      		<if test="appid != null and '' != appid" >
+      			appid,
+      		</if>
+      		<if test="wxAppsecret != null and '' != wxAppsecret" >
+      			wx_appsecret,
+      		</if>
+      		<if test="wxToken != null and '' != wxToken" >
+      			wx_token,
+      		</if>
+      		<if test="wxAeskey != null and '' != wxAeskey" >
+      			wx_aeskey,
+      		</if>
+      		<if test="wxRemark != null and '' != wxRemark" >
+      			wx_remark,
+      		</if>
+      		<if test="isService != null and '' != isService" >
+      			is_service,
+      		</if>
+      		<if test="merchantId != null" >
+      			merchant_id,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+      		<if test="id != null" >
+	  			#{id,jdbcType=INTEGER},
+	  		</if>
+      		<if test="appid != null and '' != appid" >
+	  			#{appid,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="wxAppsecret != null and '' != wxAppsecret" >
+	  			#{wxAppsecret,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="wxToken != null and '' != wxToken" >
+	  			#{wxToken,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="wxAeskey != null and '' != wxAeskey" >
+	  			#{wxAeskey,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="wxRemark != null and '' != wxRemark" >
+	  			#{wxRemark,jdbcType=VARCHAR},
+	  		</if>
+      		<if test="isService != null and '' != isService" >
+	  			#{isService,jdbcType=CHAR},
+	  		</if>
+      		<if test="merchantId != null" >
+	  			#{merchantId,jdbcType=INTEGER},
+	  		</if>
+    	</trim>
+  	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.towcent.base.common.model.SysWxConfig" >
+    	update sys_wx_config 
+	    <set >
+	      	<if test="id != null" >
+	        	id = #{id,jdbcType=INTEGER},
+	      	</if>
+	      	<if test="appid != null and '' != appid" >
+	        	appid = #{appid,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="wxAppsecret != null and '' != wxAppsecret" >
+	        	wx_appsecret = #{wxAppsecret,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="wxToken != null and '' != wxToken" >
+	        	wx_token = #{wxToken,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="wxAeskey != null and '' != wxAeskey" >
+	        	wx_aeskey = #{wxAeskey,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="wxRemark != null and '' != wxRemark" >
+	        	wx_remark = #{wxRemark,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="isService != null and '' != isService" >
+	        	is_service = #{isService,jdbcType=CHAR},
+	      	</if>
+	      	<if test="merchantId != null" >
+	        	merchant_id = #{merchantId,jdbcType=INTEGER},
+	      	</if>
+    	</set>
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	<update id="updateByPrimaryKey" parameterType="com.towcent.base.common.model.SysWxConfig" >
+    	update sys_wx_config 
+    	set 
+      	      		id = #{id,jdbcType=INTEGER},
+      		appid = #{appid,jdbcType=VARCHAR},
+      		wx_appsecret = #{wxAppsecret,jdbcType=VARCHAR},
+      		wx_token = #{wxToken,jdbcType=VARCHAR},
+      		wx_aeskey = #{wxAeskey,jdbcType=VARCHAR},
+      		wx_remark = #{wxRemark,jdbcType=VARCHAR},
+      		is_service = #{isService,jdbcType=CHAR},
+      		merchant_id = #{merchantId,jdbcType=INTEGER} 
+    	where id = #{id,jdbcType=INTEGER}
+  	</update>
+</mapper>
